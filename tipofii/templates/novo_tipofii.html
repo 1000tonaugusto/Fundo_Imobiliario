@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'cabecalho' %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
+{% endblock 'cabecalho' %}
+
+{% block 'conteudo' %}
+
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            
+            <div class="col-md">
+                
+                <div class="box-form">
+                    <form action="{% url 'novo_tipofii' %}" method="POST"> {% csrf_token %}
+                        <h3>Novo Tipo de fundo imobiliário</h3>
+                        {% if messages %}
+                            <br>
+                            {% for message in messages %}
+                                <section class="alert {{message.tags}}">
+                                    {{message}}
+                                </section>
+                            {% endfor %}
+                        {% endif %}
+                        <br>
+                        <label>Nome</label>
+                        <input type="text" class="form-control" placeholder="nomTipo" name="nomTipo">
+                        <br>
+                        <br>
+                        <input type="submit" value="Enviar" class="btn-cadastro">
+                        <br>
+                        <br>
+                        <br>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md">
+                <form action="{% url 'novo_tipofii' %}" method="GET">
+                    <div class="row">
+                        <div class="col-md">
+                            <label for="">Tipos</label>
+                            <select name="filtro_tipofiis" id="" class="form-select">
+                                <option value="">Todas</option>
+                                {% for tipofii in tipofiis %}
+                                    <option value="{{tipofii.id}}">{{tipofii.nomTipo}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md">
+                            <br>
+                            <input type="submit" style="width: 100%" value="Filtrar" class="btn-cadastro">
+                        </div>
+                    </div>
+
+                </form>
+
+                <br>
+                <br>
+                {% for tipofii in tipofiis %}
+                    <div class="box-new-tipofii">
+                        <div class="tipofii">
+                            <a href="{% url 'exclui_tipofii' tipofii.id %}"><i class='icone-exit bx bx-x-circle'></i></a>
+                            <div class="tipoitem-box-item">
+                                <p class="tipoitem-item">{{tipofii.nomTipo}}</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+{% endblock 'conteudo' %}
