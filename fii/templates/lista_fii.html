@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'cabecalho' %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
+{% endblock 'cabecalho' %}
+
+{% block 'conteudo' %}
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md">
+                <form action="{% url 'lista_fii' %}" method="GET">
+                    <div class="row">
+                        <div class="col-md">
+                            <label for="">Tipo</label>
+                            <select name="tipFii" id="" class="form-select">
+                                <option value="">Todos</option>
+                                {% for tipofii in tipofiis %}
+                                    <option value="{{tipofii.id}}">{{tipofii.nomTipo}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md">
+                            <label for="">Nome</label>
+                            <input name="nomFii" id="" class="form-control" type="text">
+                        </div>
+                        <div class="col-md">
+                            <br>
+                            <input type="submit" style="width: 100%" value="Filtrar" class="btn-cadastro">
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                {% for fii in fiis %}
+                    <div class="box-new-tipofii">
+                        <div class="tipofii">
+                            <a href="{% url 'exclui_fii' fii.codFii %}"><i class='icone-exit bx bx-x-circle'></i></a>
+                            <div class="tipoitem-box-item">
+                                <p class="tipoitem-item">{{fii.nomFii}}</p>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+        
+{% endblock 'conteudo' %}

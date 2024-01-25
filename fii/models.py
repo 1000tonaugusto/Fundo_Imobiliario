@@ -9,7 +9,7 @@ class Fii(models.Model):
     valTotal = models.DecimalField(max_digits=15, decimal_places=4, verbose_name='Total investido')
     datCom = models.DateField(verbose_name='Data Com')
     datPag = models.DateField(verbose_name='Data de pagamento')
-    tipoFii = models.ForeignKey(Tipofii, null=False, on_delete=models.DO_NOTHING)
+    tipFii = models.ForeignKey(Tipofii, null=False, on_delete=models.DO_NOTHING)
     
     class Meta:
         db_table = 'fii'
