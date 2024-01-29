@@ -11,8 +11,7 @@ def novo_tipofii(request):                                                      
         print(filtro_tipofiis)
         if filtro_tipofiis:                                                     # Se for informado no campo de pesquisa do formulário
             tipofiis = tipofiis.filter(id = filtro_tipofiis) # Faz o filtro pela informação digitada no formulário
-        return render(request, 'novo_tipofii.html', {'tipofiis': tipofiis})     # Renderiza o arquivo html com a informação dos tipos de fundos imobiliários
-    
+        return render(request, 'novo_tipofii.html', {'tipofiis': tipofiis})     # Renderiza o arquivo html com a informação dos tipos de fundos imobiliários   
     elif request.method == "POST":                                              # Trata o tipo de requisiçao POST 
         nomTipo = request.POST.get('nomTipo')                                   # Pega a de nome informação do tipo de fundo do formulário html
         if len(nomTipo.strip()) == 0:                                           # Testa se foi digitado algo no campo de nome do tipo de fundo

@@ -25,6 +25,11 @@
     color: orangered;
 }
 
+.icone-edit {
+    float: right;
+    font-size: 25px;
+}
+
 .btn-cadastro {
     border-radius: 5px;
 }

@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block 'cabecalho' %}
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
 {% endblock 'cabecalho' %}
 
@@ -13,6 +13,14 @@
         <div class="row">
             <div class="col-md">
                 <form action="{% url 'lista_fii' %}" method="GET">
+                    {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        <section class="alert {{message.tags}}">
+                            {{message}}
+                        </section>
+                    {% endfor %}
+                {% endif %}
                     <div class="row">
                         <div class="col-md">
                             <label for="">Tipo</label>
@@ -36,20 +44,16 @@
                 <br>
                 <br>
                 {% for fii in fiis %}
-                    <div class="box-new-tipofii">
-                        <div class="tipofii">
-                            <a href="{% url 'exclui_fii' fii.codFii %}"><i class='icone-exit bx bx-x-circle'></i></a>
-                            <div class="tipoitem-box-item">
-                                <p class="tipoitem-item">{{fii.nomFii}}</p>
-                            </div>
-                            
+                <div class="tipofii">
+                    <a href="{% url 'altera_fii' fii.codFii %}"><i class='icone-exit bi bi-pencil-square'></i></a>
+                    <a href="{% url 'exclui_fii' fii.codFii %}"><i class='icone-edit bi bi bi-x-circle'> </i></a>
+                                <p class="tipoitem-item">{{fii.codFii}} - {{fii.nomFii}}</p>
                         </div>
-                    </div>
-                    <br>
-                    <br>
                 {% endfor %}
             </div>
         </div>
     </div>
+
+    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
         
 {% endblock 'conteudo' %}
