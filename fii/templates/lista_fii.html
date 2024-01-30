@@ -45,8 +45,8 @@
                 <br>
                 {% for fii in fiis %}
                 <div class="tipofii">
-                    <a href="{% url 'altera_fii' fii.codFii %}"><i class='icone-exit bi bi-pencil-square'></i></a>
-                    <a href="{% url 'exclui_fii' fii.codFii %}"><i class='icone-edit bi bi bi-x-circle'> </i></a>
+                    <a href="{% url 'altera_fii' fii.codFii %}"><i class='icone-edit bi bi-pencil-square'></i></a>
+                    <a href="{% url 'exclui_fii' fii.codFii %}"><i class='icone-exit bi bi bi-x-circle'> </i></a>
                                 <p class="tipoitem-item">{{fii.codFii}} - {{fii.nomFii}}</p>
                         </div>
                 {% endfor %}

@@ -7,8 +7,8 @@ class Fii(models.Model):
     nomFii = models.CharField(max_length=50, verbose_name='Nome do fundo imobiliario', default='')
     qtdCotas = models.IntegerField(verbose_name='Quantidade de cotas')
     valTotal = models.DecimalField(max_digits=15, decimal_places=4, verbose_name='Total investido')
-    datCom = models.DateField(verbose_name='Data Com')
-    datPag = models.DateField(verbose_name='Data de pagamento')
+    datCom = models.CharField(max_length=2,verbose_name='Data Com')
+    datPag = models.CharField(max_length=2, verbose_name='Data de pagamento')
     tipFii = models.ForeignKey(Tipofii, null=False, on_delete=models.DO_NOTHING)
     
     class Meta:

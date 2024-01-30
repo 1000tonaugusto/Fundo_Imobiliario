@@ -26,25 +26,29 @@
                         {% endif %}
                         <div class="col col-md-2">
                             <label>Código</label>
-                            <input type="text" class="form-control" placeholder="Código do Fundo" name="codFii" maxlenth="6" required>
+                            <input type="text" class="form-control" placeholder="Código do Fundo" name="codFii" maxlenth="6" required value="{{fii.codFii}}">
                         </div>
                         <br>
                         <label>Nome</label>
-                        <input type="text" class="form-control" placeholder="Nome do Fundo" name="nomFii" required>
+                        <input type="text" class="form-control" placeholder="Nome do Fundo" name="nomFii" required value="{{fii.nomFii}}">
                         <br>
                         <label for="">Tipo</label>
+                        
                         <select name="tipFii" id="" class="form-select">
                             <option value="">Todas</option>
                             {% for tipofii in tipofiis %}
-                                <option value="{{tipofii.id}}">{{tipofii.nomTipo}}</option>
+                                <option value="{{tipofii.id}}"                                 
+                                {% if tipofiisel.id == tipofii.id %}
+                                selected
+                                {% endif %}>{{tipofii.nomTipo}}</option>
                             {% endfor %}
                         </select>
                         <br>
                         <label>Data Com</label>
-                        <input type="text" class="form-control" placeholder="Data Com" name="datCom" required>
+                        <input type="text" class="form-control" placeholder="Data Com" name="datCom" required value='{{fii.datCom}}'>
                         <br>
                         <label>Data Pagamento</label>
-                        <input type="text" class="form-control" placeholder="Data de pagamento" name="datPag" required>
+                        <input type="text" class="form-control" placeholder="Data de pagamento" name="datPag" required value="{{fii.datPag}}">
                         <br>
                         <input type="submit" value="Enviar" class="btn-cadastro">
                         <br>
