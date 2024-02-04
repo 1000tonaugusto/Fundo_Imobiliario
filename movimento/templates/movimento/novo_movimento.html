@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'cabecalho' %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
+{% endblock 'cabecalho' %}
+
+{% block 'conteudo' %}
+
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md">
+                <div class="box-form">
+                    <form action="{% url 'novo_movimento' %}" method="POST"> {% csrf_token %}
+                        <h3>Movimentos de compra e venda de fundo imobiliários</h3>
+                        {% if messages %}
+                            <br>
+                            {% for message in messages %}
+                                <section class="alert {{message.tags}}">
+                                    {{message}}
+                                </section>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="col col-md-2">
+                            <label>Código</label>
+                            <select name='codFii' id='' class='form-select'>
+                                {% for fii in fiis %}
+                                    <option value="{{fii.codFii}}">{{fii.codFii}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <label>Data movimento</label>
+                        <input type="date" class="form-control" placeholder="Data movimento" name="datMovimento" required>
+                        <br>
+                        <label>Quantidade</label>
+                        <input type="numeric" class="form-control" placeholder="Quantidade de cotas" name="qtdCotas" required>
+                        <br>
+                        <label>Valor unitário</label>
+                        <input type="numeric" class="form-control" placeholder="Valor unitário" name="valUnitario" required>
+                        <br>
+                        <label>Compra/Venda</label>
+                        <select class="form-select" name="tipMovimento">
+                            {% for tipMovimento in tipMovimentos %}
+                                <option value="{{tipMovimento.0}}">{{tipMovimento.1}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+                        <input type="submit" value="Enviar" class="btn-cadastro">
+                        <br>
+                        <br>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
+    
+{% endblock 'conteudo' %}

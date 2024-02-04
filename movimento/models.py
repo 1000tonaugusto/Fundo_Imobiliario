@@ -13,3 +13,6 @@ class Movimento(models.Model):
     class Meta:
         db_table = 'movimento'
         db_table_comment = 'Compra e venda de ativos'
+
+    def __str__(self):
+        return self.id
