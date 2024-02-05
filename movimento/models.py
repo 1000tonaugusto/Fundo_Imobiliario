@@ -16,3 +16,7 @@ class Movimento(models.Model):
 
     def __str__(self):
         return self.id
+    
+    @property
+    def valor_total(self):
+        return self.qtdCotas * self.valUnitario

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import constants
+import datetime
 
 from .models import Movimento
 from fii.models import Fii
@@ -17,6 +18,7 @@ def novo_movimento(request):
         qtdCotas = request.POST.get('qtdCotas')
         valUnitario = request.POST.get('valUnitario')
         tipMovimento = request.POST.get('tipMovimento')
+        
 
         if len(codFii.strip()) == 0 or len(datMovimento.strip()) == 0 or len(qtdCotas.strip()) == 0 or len(valUnitario.strip()) == 0:
             messages.add_message(request, constants.ERROR, "Preencha todos os campos")
@@ -29,11 +31,29 @@ def novo_movimento(request):
         return redirect('novo_movimento')
 
 def lista_movimento(request):
-    pass
+    if request.method == "GET":
+        fiis = Fii.objects.all().order_by('codFii')
+        movimentos = Movimento.objects.all().order_by('datMovimento')
+
+        filtra_fii = request.GET.get('codFii_filtra')
+        if filtra_fii:
+            movimentos = Movimento.objects.filter(codFii_id=filtra_fii)
+        
+        return render(request, 'movimento/lista_movimento.html', {'fiis': fiis, 'movimentos': movimentos})
 
 def altera_movimento(request, id):
-    pass
+    if request.method == "GET":
+        tipMovimentos = Movimento.MOVIMENTO_CHOICES
+        movimento = Movimento.objects.get(id=id)
+        data_nf = movimento.datMovimento
+        data_formatada = data_nf.strftime('%d-%m-%Y')
+        print(data_nf)
+        
+        return render(request, 'movimento/novo_movimento.html', {'movimento': movimento, 'tipMovimentos': tipMovimentos, 'data_formatada': data_formatada})
 
 def exclui_movimento(request, id):
-    pass
+    movimento = Movimento.objects.get(id=id)
+    movimento.delete()
+    messages.add_message(request, constants.SUCCESS,'Movimento excluido com sucesso!')
+    return redirect('lista_movimento')
 

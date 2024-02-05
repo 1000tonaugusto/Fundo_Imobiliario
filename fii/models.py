@@ -11,6 +11,9 @@ class Fii(models.Model):
     datPag = models.CharField(max_length=2, verbose_name='Data de pagamento')
     tipFii = models.ForeignKey(Tipofii, null=False, on_delete=models.DO_NOTHING)
     
+    def __str__(self):
+        return self.codFii
+    
     class Meta:
         db_table = 'fii'
         db_table_comment = 'Fundos imobiliarios'
