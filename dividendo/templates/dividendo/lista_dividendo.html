@@ -13,7 +13,7 @@
         <br>
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'lista_movimento' %}" method="GET">
+                <form action="{% url 'lista_dividendo' %}" method="GET">
                     {% if messages %}
                     <br>
                     {% for message in messages %}
@@ -24,7 +24,7 @@
                 {% endif %}
                     <div class="row">
                         <div class="col-md">
-                            <label for="">Fundo Imobiliário</label>
+                            <label for="">Dividendos de fundo imobiliários</label>
                             <select name="codFii_filtra" id="" class="form-select">
                                 <option value="">Todos</option>
                                 {% for fii in fiis %}
@@ -38,39 +38,37 @@
                         </div>
                         <div class="col-md">
                             <br>
-                            <a href="{% url 'novo_movimento' %}" style="width: 100%" class="btn btn-success"><span>Incluir</span></a>
+                            <a href="{% url 'novo_dividendo' %}" style="width: 100%" class="btn btn-success"><span>Incluir</span></a>
                         </div>
                     </div>
                 </form>
                 <br>
                 <br>
 
-                <div class="movimento">
+                <div class="dividendo">
                     <table class="table table-dark table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Codido Fii</th>
+                                <th scope="col">Codigo Fii</th>
                                 <th scope="col">Data</th>
                                 <th scope="col">Valor Unitario</th>
                                 <th scope="col">Quantidade</th>
                                 <th scope="col">Total</th>
-                                <th scope="col">Tipo</ht>
                                 <th scope="col" colspan="2" class="centralizar">Ações</th>
                             </tr>
                         </thead>
                     <tbody>
-                        {% for movimento in movimentos %}
+                        {% for dividendo in dividendos %}
                             <tr>
-                                <td>{{movimento.id}}</td>
-                                <td>{{movimento.codFii}}</td>
-                                <td>{{movimento.datMovimento}}</td>
-                                <td class="numero">{{movimento.valUnitario|floatformat:2}}</td>
-                                <td class="numero">{{movimento.qtdCotas}}</td>
-                                <td class="numero">{{movimento.valor_total|floatformat:2}}</td>
-                                <td>{{movimento.tipMovimento}}</td>
-                                <td class="botao_lista"><a href="{% url 'altera_movimento' movimento.id %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
-                                <td class="botao_lista"><a href="{% url 'exclui_movimento' movimento.id %}"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
+                                <td>{{dividendo.id}}</td>
+                                <td>{{dividendo.codFii}}</td>
+                                <td>{{dividendo.datPaga}}</td>
+                                <td class="numero">{{dividendo.valUnitario|floatformat:2}}</td>
+                                <td class="numero">{{dividendo.qtdCotas}}</td>
+                                <td class="numero">{{dividendo.valor_total|floatformat:2}}</td>
+                                <td class="botao_lista"><a href="{% url 'altera_dividendo' dividendo.id %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
+                                <td class="botao_lista"><a href="{% url 'exclui_dividendo' dividendo.id %}"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

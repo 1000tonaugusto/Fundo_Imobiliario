@@ -2,12 +2,12 @@
 {% load static %}
 
 {% block 'cabecalho' %}
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
 {% endblock 'cabecalho' %}
 
 {% block 'conteudo' %}
-    
+    {% include 'partials/navbar.html' %}
     <div class="container">
         <br>
         <br>
@@ -31,13 +31,12 @@
                         <input type="text" class="form-control" placeholder="nomTipo" name="nomTipo">
                         <br>
                         <br>
-                        <input type="submit" value="Enviar" class="btn-cadastro">
+                        <input type="submit" value="Salvar" class="btn btn-success">
                         <br>
                         <br>
                         <br>
                     </form>
                 </div>
-
             </div>
             <div class="col-md">
                 <form action="{% url 'novo_tipofii' %}" method="GET">
@@ -53,24 +52,32 @@
                         </div>
                         <div class="col-md">
                             <br>
-                            <input type="submit" style="width: 100%" value="Filtrar" class="btn-cadastro">
+                            <input type="submit" style="width: 100%" value="Filtrar" class="btn btn-primary">
                         </div>
                     </div>
                 </form>
                 <br>
                 <br>
-                {% for tipofii in tipofiis %}
-                    <div class="box-new-tipofii">
-                        <div class="tipofii">
-                            <a href="{% url 'exclui_tipofii' tipofii.id %}"><i class='icone-exit bx bx-x-circle'></i></a>
-                            <div class="tipoitem-box-item">
-                                <p class="tipoitem-item">{{tipofii.nomTipo}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
-                {% endfor %}
+                <div class="table_tipofii">
+                    <table class="table table-dark table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col" class="centralizar">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for tipofii in tipofiis %}
+                                <tr>
+                                    <td>{{tipofii.id}}</td>
+                                    <td>{{tipofii.nomTipo}}</td>
+                                    <td class="botao_lista"><a href="{% url 'exclui_tipofii' tipofii.id %}"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

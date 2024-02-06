@@ -12,3 +12,15 @@ body{
     background-color: var(--dark-color) !important;
     color: white !important;
 }
+
+.numero {
+    text-align: right;
+}
+
+.botao_lista {
+    text-align: center;
+}
+
+.centralizar {
+    text-align: center;
+}

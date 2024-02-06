@@ -45,11 +45,16 @@ def altera_movimento(request, id):
     if request.method == "GET":
         tipMovimentos = Movimento.MOVIMENTO_CHOICES
         movimento = Movimento.objects.get(id=id)
-        data_nf = movimento.datMovimento
-        data_formatada = data_nf.strftime('%d-%m-%Y')
-        print(data_nf)
-        
-        return render(request, 'movimento/novo_movimento.html', {'movimento': movimento, 'tipMovimentos': tipMovimentos, 'data_formatada': data_formatada})
+        return render(request, 'movimento/novo_movimento.html', {'movimento': movimento, 'tipMovimentos': tipMovimentos})
+    elif request.method == "POST":
+        movimento = Movimento.objects.get(id=id)
+        movimento.codFii_id = request.POST.get('codFii')
+        movimento.datMovimento = request.POST.get('datMovimento')
+        movimento.qtdCotas = request.POST.get('qtdCotas')
+        movimento.valUnitario = request.POST.get('valUnitario')
+        movimento.tipMovimento = request.POST.get('tipMovimento')
+        movimento.save()
+        return redirect('lista_movimento')
 
 def exclui_movimento(request, id):
     movimento = Movimento.objects.get(id=id)

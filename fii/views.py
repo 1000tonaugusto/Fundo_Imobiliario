@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.db.models import Sum
 
 from .models import Fii
 from tipofii.models import Tipofii
+from dividendo.models import Dividendo
 
 
 def novo_fii(request):                                                              # Função de inclusao de fundo imobiliário
@@ -54,15 +56,23 @@ def altera_fii(request, codFii):                                                
         return render(request, 'fii/novo_fii.html', {'fii': fii, 'tipofiis': tipofiis, 'tipofiisel': tipoFiiSel}) 
         
     elif request.method == "POST":                                                  # Trata o metodo POST
-        fii = Fii.objects.get(codFii=codFii)                                        # Pesquisa fundo pelo código
-
+        fii = Fii.objects.get(codFii=codFii)   
+        fii.codFii = request.POST.get("codFii")                                         # Recebe codFii do template html
+        fii.nomFii = request.POST.get("nomFii")                                         # Recebe nomFii do template html
+        fii.datCom = request.POST.get("datCom")                                         # Recebe datCom do template html
+        fii.datPag = request.POST.get("datPag")                                         # Recebe datPag do template html
+        fii.tipFii = request.POST.get("tipFii")    # Pesquisa fundo pelo código
         fii.save()                                                                  # Salva a alteração no banco de dados
-                
-        return redirect('lista_fii')                                          # Redireciona para a lista de fundocs imobiliários
-       
+        return redirect('lista_fii')                                                # Redireciona para a lista de fundocs imobiliários
     
 def exclui_fii(request, codFii):                                                    # Metodo para exclusão do fundo imobiliário
     fii = Fii.objects.get(codFii=codFii)                                            # Pesquisa fundo imobiliário pelo codigo do fundo
     fii.delete()                                                                    # Exclui o fundo imobiliário
     messages.add_message(request, constants.SUCCESS, 'Fundo excluido com sucesso')  # Exibe mensagem informando a exclusão do fundo imobiliário
-    return redirect('lista_fii')                                              # Redireciona para a lista de fundos imobiliários
+    return redirect('lista_fii')                                                    # Redireciona para a lista de fundos imobiliários
+
+def relatorio_fii(request):
+    #fiis = []
+    #fiis.append(Fii.objects.filter(dividendo__valUnitario__isnull=False).annotate(valorTotal=Sum(Dividendo.valUnitario)))
+    dividendos = Dividendo.objects.all().values('codFii').annotate(valor_total=Sum('valUnitario'))
+    return render(request, 'fii/relatorio_fii.html', {'dividendos': dividendos})

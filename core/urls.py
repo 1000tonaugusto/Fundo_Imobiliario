@@ -22,4 +22,5 @@ urlpatterns = [
     path('tipofii/', include('tipofii.urls')),
     path('fii/', include('fii.urls')),
     path('movimento/', include('movimento.urls')),
+    path('dividendo/', include('dividendo.urls')),
 ]

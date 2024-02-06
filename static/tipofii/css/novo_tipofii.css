@@ -20,20 +20,19 @@
 }
 
 .icone-exit {
-    float: right;
     font-size: 25px;
     color: orangered;
 }
 
+
 .icone-edit {
-    float: right;
+    text-align: center;
     font-size: 25px;
 }
 
 .btn-cadastro {
     border-radius: 5px;
 }
-
 
 
 *{
@@ -108,13 +107,3 @@
 
 }
 
-.btn-cadastro {
-    padding: 10px;
-    background-color: #58fcd5;
-    border: none;
-    border: 1px solid #58fcd5;
-    font-size: 18px;
-    font-weight: bold;
-    padding-left: 25px;
-    padding-right: 25px;
-}

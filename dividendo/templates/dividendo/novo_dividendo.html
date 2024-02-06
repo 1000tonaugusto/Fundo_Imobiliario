@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'cabecalho' %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
+{% endblock 'cabecalho' %}
+
+{% block 'conteudo' %}
+    {% include 'partials/navbar.html'%}
+    <div class="container">
+        <br>
+        <br>
+        <div class="row">
+            <div class="col-md">
+                <div class="box-form">
+                    {% if dividendo.id %}
+                        <form action="{% url 'altera_dividendo' dividendo.id %}" method="POST">
+                    {% else %}
+                        <form action="{% url 'novo_dividendo' %}" method="POST">
+                    {% endif %}
+                        {% csrf_token %}
+                        <h3>Dividendos de fundos imobiliários</h3>
+                        {% if messages %}
+                            <br>
+                            {% for message in messages %}
+                                <section class="alert {{message.tags}}">
+                                    {{message}}
+                                </section>
+                            {% endfor %}
+                        {% endif %}
+                            <div class="col col-md-2">
+                                <label>Código</label>
+                                {% if dividendo.id %}
+                                <input type="text" class="form-control" placeholder="Codigo Fii" name="codFii" required value="{{dividendo.codFii}}">    
+                                {% else %}
+                                    <select name='codFii' id='' class='form-select'>
+                                        {% for fii in fiis %}
+                                            <option value="{{fii.codFii}}">{{fii.codFii}}</option>
+                                        {% endfor %}
+                                    </select>
+                                {% endif %}
+                            </div>
+                            <label>Data de pagamento</label>
+                            <input type="date" class="form-control" placeholder="Data de pagamento" name="datPaga" required value="{{dividendo.datPaga}}">
+                            <br>
+                            <label>Quantidade</label>
+                            <input type="number" class="form-control" placeholder="Quantidade de cotas" name="qtdCotas" required value="{{dividendo.qtdCotas}}">
+                            <br>
+                            <label>Valor unitário</label>
+                            <input type="number" class="form-control" placeholder="Valor unitário" name="valUnitario" required value="{{dividendo.valUnitario}}">
+                            <br>
+                            <input type="submit" value="Salvar" class="btn btn-success">
+                            <br>
+                            <br>
+                            <br>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
+    
+{% endblock 'conteudo' %}
