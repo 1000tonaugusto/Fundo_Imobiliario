@@ -1,5 +1,7 @@
 from django.db import models
 from fii.models import Fii
+from decimal import Decimal
+
 
 
 class Dividendo(models.Model):
@@ -15,3 +17,13 @@ class Dividendo(models.Model):
         
     def __str__(self):
         return self.id
+    
+    @property
+    def get_values(self):
+        valor_total = self.valUnitario*Decimal(self.qtdCotas)
+        return valor_total
+    
+    def save(self, *args, **kwargs):
+         self.valTotal = self.get_values
+         super(Dividendo, self).save(*args, **kwargs)
+    

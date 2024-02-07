@@ -17,13 +17,15 @@ def novo_dividendo(request):
         qtdCotas = request.POST.get("qtdCotas")
         valUnitario = request.POST.get("valUnitario")
         codFii = request.POST.get("codFii")
-        valTotal=(Decimal(valUnitario)*Decimal(qtdCotas))
+        valUnitario = Decimal(valUnitario)
+        print(valUnitario)
+        #valTotal=(Decimal(valUnitario)*Decimal(qtdCotas))
         
-        if len(codFii.strip()) == 0 or len(datPaga.strip()) == 0 or len(qtdCotas.strip()) == 0 or len(valUnitario.strip()) == 0:
+        if len(codFii.strip()) == 0 or len(datPaga.strip()) == 0 or len(qtdCotas.strip()) == 0:
             messages.add_message(request, constants.ERROR, "Preencha todos os campos")
             return redirect('novo_dividendo')
         
-        dividendo = Dividendo(codFii_id=codFii, datPaga=datPaga, qtdCotas=qtdCotas, valUnitario=valUnitario, valTotal=valTotal)
+        dividendo = Dividendo(codFii_id=codFii, datPaga=datPaga, qtdCotas=qtdCotas, valUnitario=valUnitario)
         dividendo.save()
         
         messages.add_message(request, constants.SUCCESS, 'Dividendo incluso com sucesso!')

@@ -27,12 +27,11 @@
                             </tr>
                         </thead>
                     <tbody>
-                        {% for dividendo in dividendos %}
+                        <p>{{ dividendo.valor_total }}</p>
                             <tr>
                                 <td>{{dividendo.codFii}}</td>
-                                <td>{{dividendo.valor_total}}</td>
-                                <td>{{dividendos}}</td>
-                                <td>Quantidade</td>
+                                <td>{{ dividendo.valor_total}}</td>
+                                <td>{{ dividendo.qtdCotas }}</td>
                                 <td>Total</td>
                             </tr>
                         {% endfor %}

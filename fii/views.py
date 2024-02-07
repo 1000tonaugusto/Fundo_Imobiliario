@@ -74,5 +74,5 @@ def exclui_fii(request, codFii):                                                
 def relatorio_fii(request):
     #fiis = []
     #fiis.append(Fii.objects.filter(dividendo__valUnitario__isnull=False).annotate(valorTotal=Sum(Dividendo.valUnitario)))
-    dividendos = Dividendo.objects.all().values('codFii').annotate(valor_total=Sum('valUnitario'))
+    dividendos = Dividendo.objects.all().values('codFii').annotate(valor_total=Sum('valTotal'))
     return render(request, 'fii/relatorio_fii.html', {'dividendos': dividendos})
