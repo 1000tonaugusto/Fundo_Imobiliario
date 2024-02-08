@@ -1,18 +1,18 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
-import datetime
 
 from .models import Movimento
 from fii.models import Fii
 
 
-def novo_movimento(request):
-    if request.method == "GET":
-        fiis = Fii.objects.all().order_by('codFii')
+def novo_movimento(request):                                                                                        # Função para inclusão de movimentos
+    if request.method == "GET":                                                                                     # Trata a requisição GET
+        fiis = Fii.objects.all().order_by('codFii')                                                                 # Pesquisa todos os fundo imobiliarios
         tipMovimentos = Movimento.MOVIMENTO_CHOICES
-        return render(request,'movimento/novo_movimento.html', {'fiis': fiis, 'tipMovimentos': tipMovimentos})
-    elif request.method == "POST":
+        return render(request,'movimento/novo_movimento.html', {'fiis': fiis, 
+                                                                'tipMovimentos': tipMovimentos})                    # Carrega o template html com as informações dos fundos
+    elif request.method == "POST":                                                                                  # Trata a requisição POST
         codFii = request.POST.get('codFii')
         datMovimento = request.POST.get('datMovimento')
         qtdCotas = request.POST.get('qtdCotas')

@@ -7,5 +7,4 @@ urlpatterns = [
     path('lista_fii/', views.lista_fii, name='lista_fii'),
     path('exclui_fii/<str:codFii>', views.exclui_fii, name='exclui_fii'),
     path('altera_fii/<str:codFii>', views.altera_fii, name='altera_fii'),
-    path('relatorio_fii/', views.relatorio_fii, name='relatorio_fii'),
 ]

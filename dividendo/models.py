@@ -3,7 +3,6 @@ from fii.models import Fii
 from decimal import Decimal
 
 
-
 class Dividendo(models.Model):
     datPaga = models.DateField(verbose_name='Data do movimento', blank=True, null=True)
     qtdCotas = models.IntegerField(verbose_name='Quantidade de cotas')
@@ -16,7 +15,7 @@ class Dividendo(models.Model):
         db_table_comment = 'Dividendos recebidos'
         
     def __str__(self):
-        return self.id
+        return self.codFii_id
     
     @property
     def get_values(self):
@@ -24,6 +23,6 @@ class Dividendo(models.Model):
         return valor_total
     
     def save(self, *args, **kwargs):
-         self.valTotal = self.get_values
-         super(Dividendo, self).save(*args, **kwargs)
+        self.valTotal = self.get_values
+        super(Dividendo, self).save(*args, **kwargs)
     

@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import constants
-from django.db.models import Sum
 
 from .models import Fii
 from tipofii.models import Tipofii
 from dividendo.models import Dividendo
+from movimento.models import Movimento
 
 
 def novo_fii(request):                                                              # Função de inclusao de fundo imobiliário
@@ -67,12 +67,14 @@ def altera_fii(request, codFii):                                                
     
 def exclui_fii(request, codFii):                                                    # Metodo para exclusão do fundo imobiliário
     fii = Fii.objects.get(codFii=codFii)                                            # Pesquisa fundo imobiliário pelo codigo do fundo
-    fii.delete()                                                                    # Exclui o fundo imobiliário
-    messages.add_message(request, constants.SUCCESS, 'Fundo excluido com sucesso')  # Exibe mensagem informando a exclusão do fundo imobiliário
+    dividendo = Dividendo.objects.filter(codFii=codFii)[:1]
+    if dividendo:
+        messages.add_message(request, constants.INFO, 'Não pode excluir, há dividendos para esse fundo')
+    else:
+        movimento = Movimento.objects.filter(codFii=codFii)[:1]
+        if movimento:
+            messages.add_message(request, constants.INFO,'Não pode excluir, há compras/vendas para esse fundo')
+        else:
+            fii.delete()                                                                    # Exclui o fundo imobiliário
+            messages.add_message(request, constants.SUCCESS, 'Fundo excluido com sucesso')  # Exibe mensagem informando a exclusão do fundo imobiliário
     return redirect('lista_fii')                                                    # Redireciona para a lista de fundos imobiliários
-
-def relatorio_fii(request):
-    #fiis = []
-    #fiis.append(Fii.objects.filter(dividendo__valUnitario__isnull=False).annotate(valorTotal=Sum(Dividendo.valUnitario)))
-    dividendos = Dividendo.objects.all().values('codFii').annotate(valor_total=Sum('valTotal'))
-    return render(request, 'fii/relatorio_fii.html', {'dividendos': dividendos})

@@ -14,8 +14,13 @@
         <div class="row">
             <div class="col-md">
                 <br>
+                <div class="row">
+                    <div class="col-md">
+                        <canvas id="grafico1"></canvas>
+                    </div>
+                </div>
                 <div class="table_fii">
-                    <table class="table table-dark table-bordered">
+                    <!--<table class="table table-dark table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Codido Fii</th>
@@ -27,21 +32,44 @@
                             </tr>
                         </thead>
                     <tbody>
-                        <p>{{ dividendo.valor_total }}</p>
+                        {% for dividendo in dividendos %}
                             <tr>
                                 <td>{{dividendo.codFii}}</td>
-                                <td>{{ dividendo.valor_total}}</td>
+                                <td>{{ dividendo.valor_total|floatformat:2}}</td>
                                 <td>{{ dividendo.qtdCotas }}</td>
                                 <td>Total</td>
                             </tr>
                         {% endfor %}
                     </tbody>
-                    </table>
+                    </table>!-->
+
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
-        
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script>
+        const ctx = document.getElementById('grafico1');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: {{ rotulos|safe }},
+            datasets: [{
+            label: 'Dividendos',
+            data: {{ valores|safe }},
+            borderWidth: 2
+            }]
+          },
+          options: {
+            scales: {
+            y: {
+              beginAtZero: true
+            }
+            }
+          }
+        });
+      </script>
+      
 {% endblock 'conteudo' %}
