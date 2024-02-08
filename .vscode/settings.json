@@ -1,0 +1,14 @@
+{
+    "name": "...",
+    "private": true,
+    "scripts": {...},
+    "dependencies": {...},
+    "prettier": {
+        "useTabs": false,
+        "semi": false,
+        "singleQuote": true,
+        "jsxSingleQuote": true,
+        "bracketSpacing": true,
+        "arrowParens": "always"
+    }
+}

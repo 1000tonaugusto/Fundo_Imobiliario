@@ -1,84 +1,107 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} {% load static %} {% block 'cabecalho' %}
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
+	rel="stylesheet"
+/>
+<link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet" />
+{% endblock 'cabecalho' %} {% block 'conteudo' %} {% include
+'partials/navbar.html' %}
+<div class="container">
+	<br />
+	<br />
+	<div class="row">
+		<div class="col-md">
+			<form action="{% url 'lista_dividendo' %}" method="GET">
+				{% if messages %}
+				<br />
+				{% for message in messages %}
+				<section class="alert {{message.tags}}">{{message}}</section>
+				{% endfor %} {% endif %}
+				<div class="row">
+					<div class="col-md">
+						<label for="">Dividendos de fundo imobiliários</label>
+						<select name="codFii_filtra" id="" class="form-select">
+							<option value="">Todos</option>
+							{% for fii in fiis %}
+							<option value="{{fii.codFii}}">
+								{{fii.codFii}}
+							</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="col-md">
+						<br />
+						<input
+							type="submit"
+							style="width: 100%"
+							value="Filtrar"
+							class="btn btn-primary"
+						/>
+					</div>
+					<div class="col-md">
+						<br />
+						<a
+							href="{% url 'novo_dividendo' %}"
+							style="width: 100%"
+							class="btn btn-success"
+							><span>Incluir</span></a
+						>
+					</div>
+				</div>
+			</form>
+			<br />
+			<br />
+			<div class="dividendo">
+				<table class="table table-dark table-bordered">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Codigo Fii</th>
+							<th scope="col">Data</th>
+							<th scope="col">Valor Unitario</th>
+							<th scope="col">Quantidade</th>
+							<th scope="col">Total</th>
+							<th scope="col" colspan="2" class="centralizar">
+								Ações
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for dividendo in dividendos %}
+						<tr>
+							<td>{{dividendo.id}}</td>
+							<td>{{dividendo.codFii}}</td>
+							<td>{{dividendo.datPaga}}</td>
+							<td class="numero">
+								{{dividendo.valUnitario|floatformat:2}}
+							</td>
+							<td class="numero">{{dividendo.qtdCotas}}</td>
+							<td class="numero">
+								{{dividendo.valTotal|floatformat:2}}
+							</td>
+							<td class="botao_lista">
+								<a
+									href="{% url 'altera_dividendo' dividendo.id %}"
+									><i
+										class="icone-edit bi bi-pencil-square"
+									></i
+								></a>
+							</td>
+							<td class="botao_lista">
+								<a
+									href="{% url 'exclui_dividendo' dividendo.id %}"
+									><i class="icone-exit bi bi bi-x-circle"></i
+								></a>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
-{% block 'cabecalho' %}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
-{% endblock 'cabecalho' %}
+<script src="{% static 'geral/js/fecha_alert.js' %}"></script>
 
-{% block 'conteudo' %}
-    {% include 'partials/navbar.html' %}
-    <div class="container">
-        <br>
-        <br>
-        <div class="row">
-            <div class="col-md">
-                <form action="{% url 'lista_dividendo' %}" method="GET">
-                    {% if messages %}
-                    <br>
-                    {% for message in messages %}
-                        <section class="alert {{message.tags}}">
-                            {{message}}
-                        </section>
-                    {% endfor %}
-                {% endif %}
-                    <div class="row">
-                        <div class="col-md">
-                            <label for="">Dividendos de fundo imobiliários</label>
-                            <select name="codFii_filtra" id="" class="form-select">
-                                <option value="">Todos</option>
-                                {% for fii in fiis %}
-                                    <option value="{{fii.codFii}}">{{fii.codFii}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-md">
-                            <br>
-                            <input type="submit" style="width: 100%" value="Filtrar" class="btn btn-primary">
-                        </div>
-                        <div class="col-md">
-                            <br>
-                            <a href="{% url 'novo_dividendo' %}" style="width: 100%" class="btn btn-success"><span>Incluir</span></a>
-                        </div>
-                    </div>
-                </form>
-                <br>
-                <br>
-
-                <div class="dividendo">
-                    <table class="table table-dark table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Codigo Fii</th>
-                                <th scope="col">Data</th>
-                                <th scope="col">Valor Unitario</th>
-                                <th scope="col">Quantidade</th>
-                                <th scope="col">Total</th>
-                                <th scope="col" colspan="2" class="centralizar">Ações</th>
-                            </tr>
-                        </thead>
-                    <tbody>
-                        {% for dividendo in dividendos %}
-                            <tr>
-                                <td>{{dividendo.id}}</td>
-                                <td>{{dividendo.codFii}}</td>
-                                <td>{{dividendo.datPaga}}</td>
-                                <td class="numero">{{dividendo.valUnitario|floatformat:2}}</td>
-                                <td class="numero">{{dividendo.qtdCotas}}</td>
-                                <td class="numero">{{dividendo.valTotal|floatformat:2}}</td>
-                                <td class="botao_lista"><a href="{% url 'altera_dividendo' dividendo.id %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
-                                <td class="botao_lista"><a href="{% url 'exclui_dividendo' dividendo.id %}"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
-        
 {% endblock 'conteudo' %}
