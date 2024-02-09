@@ -1,15 +1,16 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
 from decimal import Decimal
 from django.db.models import Sum
-from datetime import date
+from django.contrib.auth.decorators import login_required
 
 from .models import Dividendo
 from fii.models import Fii
 
 
+@login_required()
 def novo_dividendo(request):
     if request.method == "GET":                                                                     
         fiis = Fii.objects.all().order_by('codFii')
@@ -20,8 +21,6 @@ def novo_dividendo(request):
         valUnitario = request.POST.get("valUnitario")
         codFii = request.POST.get("codFii")
         valUnitario = Decimal(valUnitario)
-        print(valUnitario)
-        #valTotal=(Decimal(valUnitario)*Decimal(qtdCotas))
         
         if len(codFii.strip()) == 0 or len(datPaga.strip()) == 0 or len(qtdCotas.strip()) == 0:
             messages.add_message(request, constants.ERROR, "Preencha todos os campos")
@@ -33,6 +32,8 @@ def novo_dividendo(request):
         messages.add_message(request, constants.SUCCESS, 'Dividendo incluso com sucesso!')
         return redirect('novo_dividendo')
 
+
+@login_required()
 def lista_dividendo(request):
     if request.method == "GET":
         fiis = Fii.objects.all().order_by('codFii')
@@ -44,6 +45,8 @@ def lista_dividendo(request):
             
         return render(request, 'dividendo/lista_dividendo.html', {'fiis': fiis, 'dividendos': dividendos})
 
+
+@login_required()
 def altera_dividendo(request, id):
     dividendo = Dividendo.objects.get(id=id)
     if request.method == "GET":
@@ -57,12 +60,16 @@ def altera_dividendo(request, id):
         dividendo.save()
         return redirect('lista_dividendo')
 
+
+@login_required()
 def exclui_dividendo(request, id):
     dividendo = Dividendo.objects.get(id=id)
     dividendo.delete()
     messages.add_message(request, constants.SUCCESS, 'Dividendo excluido com sucesso!')
     return redirect('lista_dividendo')
 
+
+@login_required()
 def grafico_dividendo(request):
     dividendos = Dividendo.objects.values_list('codFii').annotate(valor_total=Sum('valTotal'))
     rotulos = []
@@ -75,6 +82,8 @@ def grafico_dividendo(request):
     
     return render(request, 'dividendo/grafico_dividendo.html', {'valores': valores, 'rotulos': rotulos})
 
+
+@login_required()
 def relatorio_dividendo(request):
     dividendos = Dividendo.objects.all().values("codFii","datPaga__year","datPaga__month").annotate(valorTotal=(Sum('valTotal')))[:1]
     

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib.messages import constants
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .models import Tipofii
 from fii.models import Fii
 
 
+@login_required()
 def novo_tipofii(request):                                                      # Define a função de inclusão de tipo de fundo imobiliário
     if request.method == "GET":                                                 # Trata o tipo de requisiçao GET (Pesquisa)
         tipofiis = Tipofii.objects.all()                                        # Pesquisa todos os tipos de fundos imobiliarios
@@ -24,7 +26,9 @@ def novo_tipofii(request):                                                      
         messages.add_message(request, constants.SUCCESS, 'Tipo de fundo cadastrado com sucesso') # Mensagem para o usuário
         return redirect('novo_tipofii')                                         # Redireciona para o formulário html de inclusão
 # Fim da função de inclusão
-    
+
+
+@login_required()
 def exclui_tipofii(request, id):                                                # Define metodo de exclusão de tipo de fundo imobiliário
     tipofii = Tipofii.objects.get(id=id)                                        # Pesquisa tipo de fundo a ser excluido pelo id
     fii = Fii.objects.filter(tipFii=id)[:1]                                     # Pesquisa se há fundos imobiliarios com o codigo a ser excluido

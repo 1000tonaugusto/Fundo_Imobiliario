@@ -32,6 +32,9 @@ INSTALLED_APPS = [
     'fii',
     'dividendo',
     'movimento',
+    'usuario',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +133,9 @@ MESSAGE_TAGS = {
     constants.INFO: 'alert-info',
     constants.WARNING: 'altert-warning',
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+LOGIN_REDIRECT_URL = 'lista_fii'
+
+LOGIN_URL = 'logar'

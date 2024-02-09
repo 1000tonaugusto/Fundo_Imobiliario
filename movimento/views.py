@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.contrib.auth.decorators import login_required
 
 from .models import Movimento
 from fii.models import Fii
 
 
+@login_required()
 def novo_movimento(request):                                                                                        # Função para inclusão de movimentos
     if request.method == "GET":                                                                                     # Trata a requisição GET
         fiis = Fii.objects.all().order_by('codFii')                                                                 # Pesquisa todos os fundo imobiliarios
@@ -19,7 +21,6 @@ def novo_movimento(request):                                                    
         valUnitario = request.POST.get('valUnitario')
         tipMovimento = request.POST.get('tipMovimento')
         
-
         if len(codFii.strip()) == 0 or len(datMovimento.strip()) == 0 or len(qtdCotas.strip()) == 0 or len(valUnitario.strip()) == 0:
             messages.add_message(request, constants.ERROR, "Preencha todos os campos")
             return redirect('novo_movimento')
@@ -30,6 +31,8 @@ def novo_movimento(request):                                                    
         messages.add_message(request, constants.SUCCESS, 'Movimento incluído com sucesso!')
         return redirect('novo_movimento')
 
+
+@login_required()
 def lista_movimento(request):
     if request.method == "GET":
         fiis = Fii.objects.all().order_by('codFii')
@@ -41,6 +44,8 @@ def lista_movimento(request):
         
         return render(request, 'movimento/lista_movimento.html', {'fiis': fiis, 'movimentos': movimentos})
 
+
+@login_required()
 def altera_movimento(request, id):
     if request.method == "GET":
         tipMovimentos = Movimento.MOVIMENTO_CHOICES
@@ -56,6 +61,8 @@ def altera_movimento(request, id):
         movimento.save()
         return redirect('lista_movimento')
 
+
+@login_required()
 def exclui_movimento(request, id):
     movimento = Movimento.objects.get(id=id)
     movimento.delete()

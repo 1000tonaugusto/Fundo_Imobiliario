@@ -35,7 +35,7 @@
 }
 
 
-*{
+* {
     margin: 0;
     padding: 0;
 }
@@ -68,14 +68,14 @@
 
 .box-form {
     padding: 20px;
-    background-color: rgba(217,217,217, .05);
+    background-color: rgba(217, 217, 217, .05);
     color: white !important;
 }
 
 .box-circle {
     display: flex;
     gap: 5px;
-    
+
 }
 
 .circle {
@@ -104,6 +104,4 @@
     color: white;
     outline: 0;
     width: 100%;
-
 }
-

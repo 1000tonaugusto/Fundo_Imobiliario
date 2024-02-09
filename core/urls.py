@@ -23,4 +23,5 @@ urlpatterns = [
     path('fii/', include('fii.urls')),
     path('movimento/', include('movimento.urls')),
     path('dividendo/', include('dividendo.urls')),
+    path('', include('usuario.urls')),
 ]

@@ -7,3 +7,6 @@ class Tipofii(models.Model):
     class Meta:
         db_table = 'tipofii'
         db_table_comment = 'Tipo de Fundos imobiliarios'
+        
+    def __str__(self):
+        return self.nomTipo

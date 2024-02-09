@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
+from django.contrib.auth.decorators import login_required
 
 from .models import Fii
 from tipofii.models import Tipofii
@@ -8,6 +9,7 @@ from dividendo.models import Dividendo
 from movimento.models import Movimento
 
 
+@login_required()
 def novo_fii(request):                                                              # Função de inclusao de fundo imobiliário
     if request.method == "GET":                                                     # Trata tipo de requisição GET
         tipofiis = Tipofii.objects.all().order_by('nomTipo')                        # Pesquisa todos os tipos de fundos imobiliarios para povoar o select do html
@@ -33,6 +35,8 @@ def novo_fii(request):                                                          
         messages.add_message(request, constants.SUCCESS, 'Fundo incluido com sucesso') # Exibe mensagem de inclusão
         return redirect('novo_fii')                                           # Redireciona para inclusão de um novo registro
 
+
+@login_required()
 def lista_fii(request):                                                             # Função de lista de fundos imobiliários
     if request.method == "GET":                                                     # Trata o metodo GET
         tipofiis = Tipofii.objects.all()                                            # Pesquisa todos os tipos de fundos imobiliarios para povoar o select do html
@@ -47,7 +51,9 @@ def lista_fii(request):                                                         
             fiis = Fii.objects.filter(tipFii=filtra_fii_tipo)                       # Faz a pesquisa pelo tipo de fundo imobiliário
             
         return render(request, 'fii/lista_fii.html', {'fiis': fiis, 'tipofiis': tipofiis }) # Renderiza o template html com as informações
-        
+
+
+@login_required()        
 def altera_fii(request, codFii):                                                    # Função para alteração de fundos imobiliários
     if request.method == "GET":                                                     # Trata a requisição GET
         tipofiis = Tipofii.objects.all().order_by('nomTipo')                        # Pesquisa tipos de fundos para carregar o select do template html
@@ -64,7 +70,9 @@ def altera_fii(request, codFii):                                                
         fii.tipFii = request.POST.get("tipFii")    # Pesquisa fundo pelo código
         fii.save()                                                                  # Salva a alteração no banco de dados
         return redirect('lista_fii')                                                # Redireciona para a lista de fundocs imobiliários
-    
+
+
+@login_required()
 def exclui_fii(request, codFii):                                                    # Metodo para exclusão do fundo imobiliário
     fii = Fii.objects.get(codFii=codFii)                                            # Pesquisa fundo imobiliário pelo codigo do fundo
     dividendo = Dividendo.objects.filter(codFii=codFii)[:1]
