@@ -11,8 +11,14 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'lista_fii' %}">Fundo Imobiliario</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'lista_movimento' %}">Compra/Venda</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Compra/Venda
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'lista_movimento' %}">Lista</a></li>
+            <li><a class="dropdown-item" href="{% url 'resumo_movimento' %}">Resumo</a></li>
+          </ul>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -21,6 +27,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{% url 'lista_dividendo' %}">Lista</a></li>
             <li><a class="dropdown-item" href="{% url 'grafico_dividendo' %}">Grafico</a></li>
+            <li><a class="dropdown-item" href="{% url 'resumo_dividendo' %}">Resumo</a></li>
           </ul>
         </li>
       </ul>

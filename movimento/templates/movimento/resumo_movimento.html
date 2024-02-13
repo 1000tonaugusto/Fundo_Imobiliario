@@ -13,7 +13,7 @@
         <br>
         <div class="row">
             <div class="col-md">
-                <form action="{% url 'lista_fii' %}" method="GET">
+                <form action="{% url 'lista_movimento' %}" method="GET">
                     {% if messages %}
                     <br>
                     {% for message in messages %}
@@ -24,17 +24,13 @@
                 {% endif %}
                     <div class="row">
                         <div class="col-md">
-                            <label for="">Tipo</label>
-                            <select name="tipFii" id="" class="form-select">
+                            <label for="">Fundo Imobiliário</label>
+                            <select name="codFii_filtra" id="" class="form-select">
                                 <option value="">Todos</option>
-                                {% for tipofii in tipofiis %}
-                                    <option value="{{tipofii.id}}">{{tipofii.nomTipo}}</option>
+                                {% for fii in fiis %}
+                                    <option value="{{fii.codFii}}">{{fii.codFii}}</option>
                                 {% endfor %}
                             </select>
-                        </div>
-                        <div class="col-md">
-                            <label for="">Nome</label>
-                            <input name="nomFii" id="" class="form-control" type="text">
                         </div>
                         <div class="col-md">
                             <br>
@@ -42,34 +38,27 @@
                         </div>
                         <div class="col-md">
                             <br>
-                            <a href="{% url 'novo_fii' %}" style="width: 100%" class="btn btn-success"><span>Incluir</span></a>
+                            <a href="{% url 'novo_movimento' %}" style="width: 100%" class="btn btn-success"><span>Incluir</span></a>
                         </div>
                     </div>
                 </form>
                 <br>
                 <br>
-                <div class="table_fii">
+                <div class="movimento">
                     <table class="table table-dark table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Codigo Fii</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col">Tipo</ht>
-                                <th scope="col">Valor Movimento</th>
-                                <th scope="col">Valor Dividendos</th>
-                                <th scope="col" colspan="2" class="centralizar">Ações</th>
+                                <th scope="col">Quantidade Cotas</th>
+                                <th scope="col">Valor Total</th>
                             </tr>
                         </thead>
                     <tbody>
-                        {% for fii in fiis %}
+                        {% for movimento in movimentos %}
                             <tr>
-                                <td>{{fii.0}}</td>
-                                <td>{{fii.1}}</td>
-                                <td>{{fii.2}}</td>
-                                <td class="numero">{{fii.3|floatformat:2}}</td>
-                                <td class="numero">{{fii.4|floatformat:2}}</td>
-                                <td class="botao_lista"><a href="{% url 'altera_fii' fii.0 %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
-                                <td class="botao_lista"><a href="{% url 'exclui_fii' fii.0 %}"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
+                                <td>{{movimento.codFii}}</td>
+                                <td class="numero">{{movimento.quanttotal|floatformat:2}}</td>
+                                <td class="numero">{{movimento.valortotal|floatformat:2}}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -78,7 +67,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
         
 {% endblock 'conteudo' %}

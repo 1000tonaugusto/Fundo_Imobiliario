@@ -43,7 +43,20 @@ def lista_dividendo(request):
         if filtra_fii:
             dividendos = Dividendo.objects.filter(codFii_id=filtra_fii)
             
-        return render(request, 'dividendo/lista_dividendo.html', {'fiis': fiis, 'dividendos': dividendos})
+        return render(request, 'dividendo/lista_dividendo.html', {'dividendos': dividendos})
+    
+
+@login_required()
+def resumo_dividendo(request):
+    if request.method == "GET":
+        fiis = Fii.objects.all().order_by('codFii')
+        dividendos = Dividendo.objects.all().values('codFii').annotate(valorTotal=Sum('valTotal'))
+        print(fiis)
+        filtra_fii = request.GET.get('codFii_filtra')
+        if filtra_fii:
+            dividendos = Dividendo.objects.filter(codFii_id=filtra_fii)
+            
+        return render(request, 'dividendo/resumo_dividendo.html', {'fiis': fiis, 'dividendos': dividendos })
 
 
 @login_required()
@@ -86,7 +99,5 @@ def grafico_dividendo(request):
 @login_required()
 def relatorio_dividendo(request):
     dividendos = Dividendo.objects.all().values("codFii","datPaga__year","datPaga__month").annotate(valorTotal=(Sum('valTotal')))[:1]
-    
-    print(dividendos)
-    
+
     return HttpResponse('teste')

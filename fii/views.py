@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.contrib.auth.decorators import login_required
+from django.db import connection
 
 from .models import Fii
 from tipofii.models import Tipofii
@@ -43,7 +44,13 @@ def lista_fii(request):                                                         
         fiis = Fii.objects.all().order_by('nomFii')                                 # Pesquisa todos os fundos imobiliário para preenchar a lista no template html
         filtra_fii_nome = request.GET.get('nomFii')                                 # Recebe a informação do template html para filtro
         filtra_fii_tipo = request.GET.get('tipFii')                                 # Recebe a informação do template html para filtro
+
+        cursor = connection.cursor()
+        cursor.execute('SELECT fii.codFii, fii.nomFii, tipoFii.nomTipo, SUM(dividendo.valTotal), SUM(movimento.valTotal) FROM tipoFii INNER JOIN fii ON tipofii.id=fii.tipFii_id LEFT JOIN dividendo ON fii.codFii=dividendo.codFii_id LEFT JOIN movimento ON fii.codFii=movimento.codFii_id GROUP BY fii.codFii ORDER BY fii.codFii')
         
+        fiis = cursor.fetchall()
+        print(list(cursor))
+        cursor.close()
         if filtra_fii_nome:                                                         # Se informado o campo de nome do fundo para pesquisa
             fiis = Fii.objects.filter(nomFii__icontains = filtra_fii_nome)          # Faz a pesquisa pelo nome do fundo imobiliário
             
