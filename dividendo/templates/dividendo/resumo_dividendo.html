@@ -13,11 +13,6 @@
 	<div class="row">
 		<div class="col-md">
 			<form action="{% url 'lista_dividendo' %}" method="GET">
-				{% if messages %}
-				<br />
-				{% for message in messages %}
-				<section class="alert {{message.tags}}">{{message}}</section>
-				{% endfor %} {% endif %}
 				<div class="row">
 					<div class="col-md">
 						<label for="">Dividendos de fundo imobiliários</label>

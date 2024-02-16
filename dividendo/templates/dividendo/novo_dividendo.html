@@ -21,14 +21,6 @@
                     {% endif %}
                     {% csrf_token %}
                             <h3>Dividendos de fundos imobiliários</h3>
-                    {% if messages %}
-                            <br>
-                            {% for message in messages %}
-                            <section class="alert {{message.tags}}">
-                            {{message}}
-                            </section>
-                            {% endfor %}
-                            {% endif %}
                             <div class="col col-md-2">
                                 <label>Código</label>
                                 {% if dividendo.id %}

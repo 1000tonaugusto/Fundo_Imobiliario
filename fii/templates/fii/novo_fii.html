@@ -16,14 +16,6 @@
                 <div class="box-form">
                     <form action="{% url 'novo_fii' %}" method="POST"> {% csrf_token %}
                         <h3>Fundo Imobiliário</h3>
-                        {% if messages %}
-                            <br>
-                            {% for message in messages %}
-                                <section class="alert {{message.tags}}">
-                                    {{message}}
-                                </section>
-                            {% endfor %}
-                        {% endif %}
                         <div class="col col-md-2">
                             <label>Código</label>
                             <input type="text" class="form-control" placeholder="Código do Fundo" name="codFii" maxlenth="6" required value="{{fii.codFii}}">

@@ -18,14 +18,6 @@
                 <div class="box-form">
                     <form action="{% url 'novo_tipofii' %}" method="POST"> {% csrf_token %}
                         <h3>Novo Tipo de fundo imobiliário</h3>
-                        {% if messages %}
-                            <br>
-                            {% for message in messages %}
-                                <section class="alert {{message.tags}}">
-                                    {{message}}
-                                </section>
-                            {% endfor %}
-                        {% endif %}
                         <br>
                         <label>Nome</label>
                         <input type="text" class="form-control" placeholder="Nome do tipo" name="nomTipo">
