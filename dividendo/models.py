@@ -19,7 +19,7 @@ class Dividendo(models.Model):
     
     @property
     def get_values(self):
-        valor_total = self.valUnitario*Decimal(self.qtdCotas)
+        valor_total = Decimal(self.valUnitario)*Decimal(self.qtdCotas)
         return valor_total
     
     def save(self, *args, **kwargs):

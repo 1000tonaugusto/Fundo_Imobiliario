@@ -15,9 +15,9 @@
             <div class="col-md">
                 <div class="box-form">
                         {% if movimento.id %}
-                            <form action="{% url 'altera_movimento' movimento.id %}" method="POST">
+                            <form id="formAltera" method="POST">
                         {% else %}
-                            <form action="{% url 'novo_movimento' %}" method="POST">
+                            <form id="formInclui" method="POST">
                         {% endif %}
                             {% csrf_token %}
                             <h3>Movimentos de compra e venda de fundo imobiliários</h3>
@@ -52,7 +52,11 @@
                                 {% endfor %}
                             </select>
                             <br>
-                            <input type="submit" value="Salvar" class="btn btn-success">
+                            {% if movimento %}
+                                <input onclick="confirmar_alteracao('{{movimento.id}}')" value="Salvar" class="btn btn-success">
+                            {% else %}
+                                <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success">
+                            {% endif %}
                             <br>
                             <br>
                             <br>
@@ -61,7 +65,5 @@
             </div>
         </div>
     </div>
-
-    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
     
 {% endblock 'conteudo' %}

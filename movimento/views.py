@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.messages import constants
@@ -85,4 +86,13 @@ def exclui_movimento(request, id):
     movimento.delete()
     messages.add_message(request, constants.SUCCESS,'Movimento excluido com sucesso!')
     return redirect('lista_movimento')
+
+
+@login_required()
+def grafico_movimento(request):
+    movimentos = Movimento.objects.values_list('codFii').annotate(valor_total=Sum('valTotal'))
+    rotulos = [x[0] for x in movimentos]
+    valores = [float(x[1]) for x in movimentos]
+    
+    return render(request, 'movimento/grafico_movimento.html', {'rotulos': rotulos, 'valores': valores})
 

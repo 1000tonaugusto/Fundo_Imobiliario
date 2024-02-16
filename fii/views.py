@@ -14,7 +14,7 @@ from movimento.models import Movimento
 def novo_fii(request):                                                              # Função de inclusao de fundo imobiliário
     if request.method == "GET":                                                     # Trata tipo de requisição GET
         tipofiis = Tipofii.objects.all().order_by('nomTipo')                        # Pesquisa todos os tipos de fundos imobiliarios para povoar o select do html
-        return render(request, 'fii/novo_fii.html', {'tipofiis': tipofiis })            # Renderiza o template html
+        return render(request, 'fii/novo_fii.html', {'tipofiis': tipofiis })        # Renderiza o template html
     elif request.method == "POST":                                                  # Trata tipo de requisição POST
         codFii = request.POST.get("codFii")                                         # Recebe codFii do template html
         nomFii = request.POST.get("nomFii")                                         # Recebe nomFii do template html
@@ -70,11 +70,11 @@ def altera_fii(request, codFii):                                                
         
     elif request.method == "POST":                                                  # Trata o metodo POST
         fii = Fii.objects.get(codFii=codFii)   
-        fii.codFii = request.POST.get("codFii")                                         # Recebe codFii do template html
-        fii.nomFii = request.POST.get("nomFii")                                         # Recebe nomFii do template html
-        fii.datCom = request.POST.get("datCom")                                         # Recebe datCom do template html
-        fii.datPag = request.POST.get("datPag")                                         # Recebe datPag do template html
-        fii.tipFii = request.POST.get("tipFii")    # Pesquisa fundo pelo código
+        fii.codFii = request.POST.get("codFii")                                     # Recebe codFii do template html
+        fii.nomFii = request.POST.get("nomFii")                                     # Recebe nomFii do template html
+        fii.datCom = request.POST.get("datCom")                                     # Recebe datCom do template html
+        fii.datPag = request.POST.get("datPag")                                     # Recebe datPag do template html
+        fii.tipFii_id = request.POST.get("tipFii")                                  # Pesquisa fundo pelo código
         fii.save()                                                                  # Salva a alteração no banco de dados
         return redirect('lista_fii')                                                # Redireciona para a lista de fundocs imobiliários
 

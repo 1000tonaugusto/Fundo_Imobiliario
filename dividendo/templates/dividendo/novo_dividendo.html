@@ -15,9 +15,9 @@
             <div class="col-md">
                 <div class="box-form">
                     {% if dividendo.id %}
-                        <form action="{% url 'altera_dividendo' dividendo.id %}" method="POST">
+                        <form id="formAltera" method="POST">
                     {% else %}
-                        <form action="{% url 'novo_dividendo' %}" method="POST">
+                        <form id="formInclui" method="POST">
                     {% endif %}
                     {% csrf_token %}
                             <h3>Dividendos de fundos imobiliários</h3>
@@ -42,7 +42,11 @@
                             <label>Valor unitário</label>
                             <input type="number" class="form-control" placeholder="1.0" step="0.01" name="valUnitario" required value="{{dividendo.valUnitario}}">
                             <br>
-                            <input type="submit" value="Salvar" class="btn btn-success">
+                            {% if dividendo.id %}
+                                <input onclick="confirmar_alteracao('{{dividendo.id}}')" value="Salvar" class="btn btn-success">
+                            {% else %}
+                                <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success">
+                            {% endif %}
                             <br>
                             <br>
                             <br>
