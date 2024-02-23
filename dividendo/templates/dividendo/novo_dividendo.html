@@ -1,15 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block 'cabecalho' %}
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
-{% endblock 'cabecalho' %}
-
 {% block 'conteudo' %}
-    {% include 'partials/navbar.html'%}
     <div class="container">
-        <br>
         <br>
         <div class="row">
             <div class="col-md">
@@ -34,18 +27,18 @@
                                 {% endif %}
                             </div>
                             <label>Data de pagamento</label>
-                            <input type="date" class="form-control" placeholder="Data de pagamento" name="datPaga" required value="{{dividendo.datPaga}}">
+                            <input type="date" class="form-control" placeholder="Data de pagamento" name="datPaga" required value="{{dividendo.datPaga|date:'Y-m-d'}}">
                             <br>
                             <label>Quantidade</label>
                             <input type="number" class="form-control" name="qtdCotas" required value="{{dividendo.qtdCotas}}">
                             <br>
                             <label>Valor unitário</label>
-                            <input type="number" class="form-control" placeholder="1.0" step="0.01" name="valUnitario" required value="{{dividendo.valUnitario}}">
+                            <input type="number" class="form-control" id="numeroDecimal" data-mask="#,##0.0000" placeholder="0.0" step="0.01" name="valUnitario" required value="{{dividendo.valUnitario}}">
                             <br>
                             {% if dividendo.id %}
-                                <input onclick="confirmar_alteracao('{{dividendo.id}}')" value="Salvar" class="btn btn-success">
+                                <input onclick="confirmar_alteracao('{{dividendo.id}}')" value="Salvar" class="btn btn-success" readonly>
                             {% else %}
-                                <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success">
+                                <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success" readonly>
                             {% endif %}
                             <br>
                             <br>
@@ -55,7 +48,11 @@
             </div>
         </div>
     </div>
-
-    <script src="{% static 'geral/js/fecha_alert.js' %}"></script>
+    
+    <script>
+        $(document).ready(function(){
+            console.log('teste');
+        });
+    </script>
     
 {% endblock 'conteudo' %}

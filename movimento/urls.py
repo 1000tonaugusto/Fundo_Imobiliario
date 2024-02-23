@@ -8,5 +8,5 @@ urlpatterns = [
     path('exclui_movimento/<int:id>', views.exclui_movimento, name='exclui_movimento'),
     path('altera_movimento/<int:id>', views.altera_movimento, name='altera_movimento'),
     path('resumo_movimento/', views.resumo_movimento, name='resumo_movimento'),
-    path('grafico_movimento', views.grafico_movimento, name='grafico_movimento'),
+    path('grafico_movimento/', views.grafico_movimento, name='grafico_movimento'),
 ]

@@ -139,3 +139,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 LOGIN_REDIRECT_URL = 'lista_fii'
 
 LOGIN_URL = 'logar'
+
+DECIMAL_SEPARATOR = '.'

@@ -7,10 +7,7 @@
 {% endblock 'cabecalho' %}
 
 {% block 'conteudo' %}
-    {% include 'partials/navbar.html'%}
     <div class="container">
-        <br>
-        <br>
         <div class="row">
             <div class="col-md">
                 <div class="box-form">
@@ -20,7 +17,6 @@
                             <form id="formInclui" method="POST">
                         {% endif %}
                             {% csrf_token %}
-                            <h3>Movimentos de compra e venda de fundo imobiliários</h3>
                             <div class="col col-md-2">
                                 <label>Código</label>
                                 {% if movimento.id %}
@@ -34,7 +30,7 @@
                                 {% endif %}
                             </div>
                             <label>Data movimento</label>
-                            <input type="date" class="form-control" placeholder="Data movimento" name="datMovimento" required value="{{movimento.datMovimento|date:'dmY'}}">
+                            <input type="date" class="form-control" placeholder="Data movimento" name="datMovimento" required value="{{movimento.datMovimento|date:'Y-m-d'}}">
                             <br>
                             <label>Quantidade</label>
                             <input type="numeric" class="form-control" placeholder="Quantidade de cotas" name="qtdCotas" required value="{{movimento.qtdCotas}}">
@@ -53,9 +49,9 @@
                             </select>
                             <br>
                             {% if movimento %}
-                                <input onclick="confirmar_alteracao('{{movimento.id}}')" value="Salvar" class="btn btn-success">
+                                <input onclick="confirmar_alteracao('{{movimento.id}}')" value="Salvar" class="btn btn-success" readonly>
                             {% else %}
-                                <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success">
+                                <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success" readonly>
                             {% endif %}
                             <br>
                             <br>

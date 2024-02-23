@@ -21,7 +21,7 @@ def novo_tipofii(request):                                                      
         if len(nomTipo.strip()) == 0:                                           # Testa se foi digitado algo no campo de nome do tipo de fundo
             messages.add_message(request, constants.ERROR, 'Preencha o campo de tipo de fundo') # Mensagem para o usuário
             return redirect('novo_tipofii')                                     # Redireciona para que seja informado o nome do tipo de fundo
-        tipofii = Tipofii(nomTipo = nomTipo)                                    # Atribui a informação do nome do tipo de fundo a variável (tipofii)
+        tipofii = Tipofii(nomTipo = nomTipo.upper())                                    # Atribui a informação do nome do tipo de fundo a variável (tipofii)
         tipofii.save()                                                          # Salva a informação no banco de dados
         messages.add_message(request, constants.SUCCESS, 'Tipo de fundo cadastrado com sucesso') # Mensagem para o usuário
         return redirect('novo_tipofii')                                         # Redireciona para o formulário html de inclusão

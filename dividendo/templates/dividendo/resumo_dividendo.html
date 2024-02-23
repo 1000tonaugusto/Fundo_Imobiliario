@@ -1,18 +1,12 @@
-{% extends "base.html" %} {% load static %} {% block 'cabecalho' %}
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css"
-	rel="stylesheet"
-/>
-<link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet" />
-{% endblock 'cabecalho' %} 
+{% extends "base.html" %} 
+{% load static %}
 {% block 'conteudo' %} 
-{% include 'partials/navbar.html' %}
 <div class="container">
 	<br />
 	<br />
 	<div class="row">
 		<div class="col-md">
-			<form action="{% url 'lista_dividendo' %}" method="GET">
+			<form action="{% url 'resumo_dividendo' %}" method="GET">
 				<div class="row">
 					<div class="col-md">
 						<label for="">Dividendos de fundo imobiliários</label>
@@ -48,7 +42,7 @@
 			<br />
 			<br />
 			<div class="dividendo">
-				<table class="table table-dark table-bordered">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<th scope="col">Codigo Fii</th>

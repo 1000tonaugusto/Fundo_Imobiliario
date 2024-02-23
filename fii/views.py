@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.contrib.auth.decorators import login_required
 from django.db import connection
 
 from .models import Fii
+from .forms import FiiForm
 from tipofii.models import Tipofii
 from dividendo.models import Dividendo
 from movimento.models import Movimento
@@ -12,29 +13,14 @@ from movimento.models import Movimento
 
 @login_required()
 def novo_fii(request):                                                              # Função de inclusao de fundo imobiliário
-    if request.method == "GET":                                                     # Trata tipo de requisição GET
-        tipofiis = Tipofii.objects.all().order_by('nomTipo')                        # Pesquisa todos os tipos de fundos imobiliarios para povoar o select do html
-        return render(request, 'fii/novo_fii.html', {'tipofiis': tipofiis })        # Renderiza o template html
-    elif request.method == "POST":                                                  # Trata tipo de requisição POST
-        codFii = request.POST.get("codFii")                                         # Recebe codFii do template html
-        nomFii = request.POST.get("nomFii")                                         # Recebe nomFii do template html
-        datCom = request.POST.get("datCom")                                         # Recebe datCom do template html
-        datPag = request.POST.get("datPag")                                         # Recebe datPag do template html
-        tipFii = request.POST.get("tipFii")                                         # Recebe tipFii do template html
-        
-        fii = Fii(                                                                  # cria instancia da model Fii com os dados recebidos do template
-            codFii = codFii,
-            nomFii = nomFii,
-            datCom = datCom,
-            datPag = datPag,
-            tipFii_id = tipFii,
-            qtdCotas = 0,
-            valTotal = 0 
-        )
-        
-        fii.save()                                                                  # Salva a informação no banco de dados
-        messages.add_message(request, constants.SUCCESS, 'Fundo incluido com sucesso') # Exibe mensagem de inclusão
-        return redirect('novo_fii')                                           # Redireciona para inclusão de um novo registro
+    form = FiiForm(request.POST or None)
+    if request.method == "POST":
+        form = FiiForm(request.POST)
+        if form.is_valid():
+            form.save()                                                                  # Salva a informação no banco de dados
+            messages.add_message(request, constants.SUCCESS, 'Fundo incluido com sucesso') # Exibe mensagem de inclusão
+            return redirect('novo_fii')
+    return render(request, 'fii/novo_fii.html', {'form': form})
 
 
 @login_required()
@@ -62,21 +48,13 @@ def lista_fii(request):                                                         
 
 @login_required()        
 def altera_fii(request, codFii):                                                    # Função para alteração de fundos imobiliários
-    if request.method == "GET":                                                     # Trata a requisição GET
-        tipofiis = Tipofii.objects.all().order_by('nomTipo')                        # Pesquisa tipos de fundos para carregar o select do template html
-        fii = Fii.objects.get(codFii=codFii)                                        # Pesquisa fundo imobiliário pelo codigo
-        tipoFiiSel = fii.tipFii                                                     # Tipo de fundo que está no cadastro do fundo imobiliário para trazer selecionado no select do template html
-        return render(request, 'fii/novo_fii.html', {'fii': fii, 'tipofiis': tipofiis, 'tipofiisel': tipoFiiSel}) 
-        
-    elif request.method == "POST":                                                  # Trata o metodo POST
-        fii = Fii.objects.get(codFii=codFii)   
-        fii.codFii = request.POST.get("codFii")                                     # Recebe codFii do template html
-        fii.nomFii = request.POST.get("nomFii")                                     # Recebe nomFii do template html
-        fii.datCom = request.POST.get("datCom")                                     # Recebe datCom do template html
-        fii.datPag = request.POST.get("datPag")                                     # Recebe datPag do template html
-        fii.tipFii_id = request.POST.get("tipFii")                                  # Pesquisa fundo pelo código
-        fii.save()                                                                  # Salva a alteração no banco de dados
-        return redirect('lista_fii')                                                # Redireciona para a lista de fundocs imobiliários
+    fii = get_object_or_404(Fii, codFii=codFii)
+    form = FiiForm(request.POST or None, instance=fii)
+    if form.is_valid():
+        form.save()
+        messages.add_message(request, constants.SUCCESS, 'Fundo alterado com sucesso')
+        return redirect('lista_fii')
+    return render(request, 'fii/novo_fii.html', {'form': form})
 
 
 @login_required()

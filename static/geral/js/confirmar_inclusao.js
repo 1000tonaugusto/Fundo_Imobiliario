@@ -6,6 +6,7 @@ function confirmar_inclusao()  {
         "cancelButtonText": "Cancelar",
         "confirmButtonText": "Confirmar",
         "reverseButtons": true,
+        "position": "top",
     })
     .then(function(result){
         if (result.isConfirmed) {

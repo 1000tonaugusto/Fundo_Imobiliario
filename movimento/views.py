@@ -68,6 +68,7 @@ def altera_movimento(request, id):
     if request.method == "GET":
         tipMovimentos = Movimento.MOVIMENTO_CHOICES
         movimento = Movimento.objects.get(id=id)
+        print(movimento.datMovimento)
         return render(request, 'movimento/novo_movimento.html', {'movimento': movimento, 'tipMovimentos': tipMovimentos})
     elif request.method == "POST":
         movimento = Movimento.objects.get(id=id)

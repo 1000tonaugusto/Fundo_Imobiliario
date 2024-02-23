@@ -1,79 +1,66 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block 'cabecalho' %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
-{% endblock 'cabecalho' %}
-
 {% block 'conteudo' %}
-    {% include 'partials/navbar.html' %}
+<div class="box-form">
     <div class="container">
+    <form id="formInclui" method="POST">
+        {% csrf_token %}
+        <br>
+        <h3>Novo Tipo de fundo imobiliário</h3>
+        <br>
+        <label>Nome</label>
+        <input type="text" class="form-control" placeholder="Nome do tipo" name="nomTipo">
+        <br>
+        <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success" readonly>
         <br>
         <br>
-        <div class="row">
-            
-            <div class="col-md">
-                
-                <div class="box-form">
-                    <form id="formInclui" method="POST"> {% csrf_token %}
-                        <h3>Novo Tipo de fundo imobiliário</h3>
-                        <br>
-                        <label>Nome</label>
-                        <input type="text" class="form-control" placeholder="Nome do tipo" name="nomTipo">
-                        <br>
-                        <br>
-                        <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success">
-                        <br>
-                        <br>
-                        <br>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md">
-                <form action="{% url 'novo_tipofii' %}" method="GET">
-                    <div class="row">
-                        <div class="col-md">
-                            <label for="">Tipos</label>
-                            <select name="filtro_tipofiis" id="" class="form-select">
-                                <option value="">Todas</option>
-                                {% for tipofii in tipofiis %}
-                                    <option value="{{tipofii.id}}">{{tipofii.nomTipo}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-md">
-                            <br>
-                            <input type="submit" style="width: 100%" value="Filtrar" class="btn btn-primary">
-                        </div>
-                    </div>
-                </form>
-                <br>
-                <br>
-                <div class="table_tipofii">
-                    <table class="table table-dark table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Descrição</th>
-                                <th scope="col" class="centralizar">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for tipofii in tipofiis %}
-                                <tr>
-                                    <td>{{tipofii.id}}</td>
-                                    <td>{{tipofii.nomTipo}}</td>
-                                    <td class="botao_lista"><a href="#" onclick="confirmar_exclusao('{{tipofii.id}}','/tipofii/exclui_tipofii/')"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+    </form>
     </div>
-    <script src="{% static 'geral/js/fecha_alert.js' %}">
-    </script>
-    
+</div>
 {% endblock 'conteudo' %}
+
+{% block 'conteudo_lateral' %}
+    <div class="container">
+        <form action="{% url 'novo_tipofii' %}" method="GET">
+        <div class="row">
+        <div class="col-md">
+        <br>
+        <label for="">Tipos</label>
+        <select name="filtro_tipofiis" id="" class="form-select">
+        <option value="">Todas</option>
+        {% for tipofii in tipofiis %}
+            <option value="{{tipofii.id}}">{{tipofii.nomTipo}}</option>
+        {% endfor %}
+        </select>
+        </div>
+        <div class="col-md">
+        <br>
+        <br>
+        <input type="submit" style="width: 100%" value="Filtrar" class="btn btn-primary" readonly>
+        </div>
+        </div>
+        <br>
+        </form>
+
+        <div class="table_tipofii">
+        <table class="table table-bordered">
+        <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Descrição</th>
+        <th scope="col" class="centralizar">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for tipofii in tipofiis %}
+        <tr>
+        <td>{{tipofii.id}}</td>
+        <td>{{tipofii.nomTipo}}</td>
+        <td class="botao_lista"><a href="#" onclick="confirmar_exclusao('{{tipofii.id}}','/tipofii/exclui_tipofii/')"><i class='icone-exit bi bi bi-x-circle'></i></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock 'conteudo_lateral' %}

@@ -1,32 +1,184 @@
-:root {
-    --main-color: #0b1526;
-    --dark-color: #000716;
-    --secondary-dark-color: rgb(15, 2, 26);
-    --light-color: #00c1f3;
-    --contrast-color: #f4c96b;
-    --differential-color: #58fcd5;
+/*--- Fontes ---*/
+.viga-regular {
+    font-family: "Viga", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
+.kdam-thmor-pro-regular {
+    font-family: "Kdam Thmor Pro", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.righteous-regular {
+    font-family: "Righteous", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/*-- Fim Fontes --*/
+
+
 body {
-    background-color: var(--dark-color) !important;
-    color: white !important;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+#header {
+    height: 65px;
+    padding-left: 20px;
+}
+
+.bi-person,
+.bi-gear,
+.bi-box-arrow-right {
+    padding-right: 5px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.logo {
+    width: 280px;
+    line-height: 1;
+}
+
+.logo span {
+    font-weight: 700;
+    font-size: 28px;
+    padding-left: 10px;
+    color: #000287;
+}
+
+.barra_lateral {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 300px;
+    transition: all 0.3s;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
+    background-color: #fff;
+    list-style: none;
+}
+
+.barra_lateral-nav,
+.barra_lateral-nav li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.barra_lateral-nav li a i {
+    padding-right: 7px;
+}
+
+.barra_lateral-nav .nav-item {
+    margin-bottom: 5px;
+}
+
+.barra_lateral-nav .nav-link {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: #000287;
+    transition: 0.3;
+    background: #f6f9ff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.barra_lateral-nav .navlink a i {
+    font-size: 16px;
+    padding-right: 10px;
+    color: #4154f1;
+}
+
+.barra_lateral-nav .nav-content {
+    padding: 5px 0 0 0;
+    margin: 0;
+    list-style: none;
+}
+
+.barra_lateral-nav .nav-content a {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #012970;
+    transition: 0.3;
+    padding: 10px 0 10px 40px;
+    transition: 0.3s;
+    font-family: "Kdam Thmor Pro", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.barra_lateral-nav .nav-content a i {
+    font-size: 6px;
+    margin-right: 8px;
+    line-height: 0;
+    border-radius: 50%;
+}
+
+#principal {
+    flex-grow: 1;
+    flex-basis: auto;
+    height: auto;
+    margin-bottom: 0px;
+    margin-top: 60px;
+    padding: 20px 30px;
+    margin-left: 300px;
+    background-image: radial-gradient(circle 993px at 0.5% 50.5%, rgba(137, 171, 245, 0.37) 0%, rgba(245, 247, 252, 1) 100.2%);
+}
+
+#titulo_principal {
+    margin-bottom: 10px;
+}
+
+#titulo_principal h1 {
+    margin-bottom: 0;
+}
+
+.card {
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+#rodape {
+    flex-grow: 0;
+    flex-basis: 100px;
+    margin-left: 300px;
+    padding: 20px 0;
+    margin-bottom: 0px;
+    border-top: 1px solid #cddfff;
+    height: 10%;
+    background-image: radial-gradient(circle 993px at 0.5% 50.5%, rgba(137, 171, 245, 0.37) 0%, rgba(245, 247, 252, 1) 100.2%);
+}
+
+#copyright {
+    text-align: center;
 }
 
 .numero {
     text-align: right;
 }
 
-.botao_lista {
-    text-align: center;
-}
-
-.centralizar {
-    text-align: center;
-}
-
-#centralizarform {
-    position: absolute;
-    left: 25%;
-    background-color: #0b1526;
-    height: 300px;
+hr {
+    color: linear-gradient(to right, transparent, rgb(162, 219, 236), transparent);
 }

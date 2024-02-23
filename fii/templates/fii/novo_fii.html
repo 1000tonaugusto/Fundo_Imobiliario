@@ -1,60 +1,41 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block 'cabecalho' %}
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="{% static 'tipofii/css/novo_tipofii.css' %}" rel="stylesheet">
-{% endblock 'cabecalho' %}
+{% load crispy_forms_tags %}
 
 {% block 'conteudo' %}
-    {% include 'partials/navbar.html'%}
     <div class="container">
-        <br>
-        <br>
         <div class="row">
             <div class="col-md">
                 <div class="box-form">
-                    {% if fii %}
-                    <form id="formAltera" method="POST">
-                    {% else %}
-                    <form id="formInclui" method="POST">
-                    {% endif%}
+                    <br>
+                    <form class="form" method="POST">
                         {% csrf_token %}
-                        <h3>Fundo Imobiliário</h3>
-                        <div class="col col-md-2">
-                            <label>Código</label>
-                            <input type="text" class="form-control" placeholder="Código do Fundo" name="codFii" maxlenth="6" required value="{{fii.codFii}}">
+                        <div class="row">
+                            {% if form.id_codFii %}
+                                <p>teste</p>
+                            {% else %}
+                                <div class="form-group col-md-2 md-0">
+                                    {{ form.codFii|as_crispy_field }}
+                                </div>
+                            {% endif %}
+                            <div class="form-group col-md-10 md-0">
+                                {{ form.nomFii|as_crispy_field }}
+                            </div>
                         </div>
+                        <div class="row">
+                            <div class="form-group col-md-4 md-0">
+                                {{ form.datCom|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-4 md-0">
+                                {{ form.datPag|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-4 md-0">
+                                {{ form.tipFii|as_crispy_field }}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                         <br>
-                        <label>Nome</label>
-                        <input type="text" class="form-control" placeholder="Nome do Fundo" name="nomFii" required value="{{fii.nomFii}}">
-                        <br>
-                        <label for="">Tipo</label>
-                        
-                        <select name="tipFii" id="" class="form-select">
-                            <option value="">Todas</option>
-                            {% for tipofii in tipofiis %}
-                                <option value="{{tipofii.id}}"                                 
-                                {% if tipofiisel.id == tipofii.id %}
-                                selected
-                                {% endif %}>{{tipofii.nomTipo}}</option>
-                            {% endfor %}
-                        </select>
-                        <br>
-                        <label>Data Com</label>
-                        <input type="text" class="form-control" placeholder="Data Com" name="datCom" required value='{{fii.datCom}}'>
-                        <br>
-                        <label>Data Pagamento</label>
-                        <input type="text" class="form-control" placeholder="Data de pagamento" name="datPag" required value="{{fii.datPag}}">
-                        <br>
-                        {% if fii %}
-                            <input onclick="confirmar_alteracao('{{fii.codFii}}')" value="Salvar" class="btn btn-success">
-                        {% else %}
-                            <input onclick="confirmar_inclusao()" value="Salvar" class="btn btn-success">
-                        {% endif %}
-                        <br>
-                        <br>
-                        <br>
+                        <hr>
                     </form>
                 </div>
             </div>
