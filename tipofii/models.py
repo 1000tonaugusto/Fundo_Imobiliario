@@ -10,3 +10,7 @@ class Tipofii(models.Model):
         
     def __str__(self):
         return self.nomTipo
+    
+    def save(self, *args, **kwargs):
+        self.nomTipo = self.nomTipo.upper()
+        super(Tipofii, self).save(*args, **kwargs)

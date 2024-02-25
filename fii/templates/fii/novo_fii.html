@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-
+{% block 'titulo_pagina' %}
+    <h1 class="viga-regular">Novo Fundos Imobiliários</h1>
+{% endblock %}
 {% block 'conteudo' %}
     <div class="container">
         <div class="row">
@@ -11,14 +13,13 @@
                     <form class="form" method="POST">
                         {% csrf_token %}
                         <div class="row">
-                            {% if form.id_codFii %}
-                                <p>teste</p>
-                            {% else %}
-                                <div class="form-group col-md-2 md-0">
-                                    {{ form.codFii|as_crispy_field }}
-                                </div>
-                            {% endif %}
-                            <div class="form-group col-md-10 md-0">
+                            <div class="form-group col-md-2 md-0">
+                                {{ form.codFii|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-2 md-0">
+                                {{ form.codCor|as_crispy_field }}
+                            </div>
+                            <div class="form-grupo col-md-8 md-0">
                                 {{ form.nomFii|as_crispy_field }}
                             </div>
                         </div>

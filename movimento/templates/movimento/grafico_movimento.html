@@ -1,12 +1,15 @@
 {% extends "base.html" %} 
-{% load static %} 
+{% load static %}
+{% block 'titulo_pagina' %}
+    <h1 class="viga-regular">Gráfico Movimentação</h1>
+{% endblock %}
 {% block 'conteudo' %} 
 <div class="container">
 	<div class="row">
 		<div class="col-md">
 			<div class="row">
 				<div class="col-md">
-					<canvas id="grafico1"></canvas>
+					<div id="grafico1" style="width: 600px;height:600px;"></div>
 				</div>
 			</div>
 			<div class="table_fii"></div>
@@ -14,28 +17,34 @@
 	</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 
-<script>
-	const ctx = document.getElementById('grafico1');
-	new Chart(ctx, {
-	    type: 'polarArea',
-	    data: {
-	    labels: {{ rotulos|safe }},
-	    datasets: [{
-	    label: 'Dividendos',
-	    data: {{ valores|safe }},
-	    borderWidth: 2
-	    }]
-	  },
-	  options: {
-	    scales: {
-	    y: {
-	      beginAtZero: true
-	    }
-	    }
-	  }
-	});
+<script type="text/javascript">
+	var myChart = echarts.init(document.getElementById('grafico1'));
+	
+	var option = {
+		title: {
+			text: 'Movimentação'
+		},
+		tooltip: {},
+		legend: {
+			data: ['Movimentação']
+		},
+		xAxis: {
+			data: {{ rotulos|safe }}
+		},
+		yAxis: {},
+		color: ['#dd6b66', '#759aa0', '#e69d87'],
+		series: [
+			{
+			name: 'Movimentação',
+			type: 'bar',
+			data: {{ valores|safe }},
+			}
+		]
+	};
+
+	myChart.setOption(option)
 </script>
 
 {% endblock 'conteudo' %}

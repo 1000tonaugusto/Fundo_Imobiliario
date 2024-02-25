@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block 'titulo_pagina' %}
+    <h1 class="viga-regular">Tipos de Fundos Imobiliários</h1>
+{% endblock %}
 {% block 'conteudo' %}
 <div class="box-form">
     <div class="container">
     <form id="formInclui" method="POST">
         {% csrf_token %}
-        <br>
-        <h3>Novo Tipo de fundo imobiliário</h3>
         <br>
         <label>Nome</label>
         <input type="text" class="form-control" placeholder="Nome do tipo" name="nomTipo">
