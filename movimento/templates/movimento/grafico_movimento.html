@@ -7,11 +7,11 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md">
-			<div class="row">
-				<div class="col-md">
+
+
 					<div id="grafico1" style="width: 600px;height:600px;"></div>
-				</div>
-			</div>
+
+
 			<div class="table_fii"></div>
 		</div>
 	</div>
@@ -26,23 +26,34 @@
 		title: {
 			text: 'Movimentação'
 		},
+		grid: {
+			left: '5%',
+			right: '5%',
+			containLabel: true
+		},
 		tooltip: {},
 		legend: {
-			data: ['Movimentação']
-		},
-		xAxis: {
 			data: {{ rotulos|safe }}
 		},
-		yAxis: {},
-		color: ['#dd6b66', '#759aa0', '#e69d87'],
+		xAxis: {
+			type: "category",
+			data: {{ rotulos|safe }},
+			axisTick: {
+				alignWithLabel: true
+			}
+		},
+		yAxis: { type: 'value'},
 		series: [
 			{
 			name: 'Movimentação',
 			type: 'bar',
+			barWidth: '80%',
 			data: {{ valores|safe }},
 			}
 		]
 	};
+
+	myChart.resize();
 
 	myChart.setOption(option)
 </script>

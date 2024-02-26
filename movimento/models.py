@@ -1,6 +1,10 @@
 from django.db import models
-from fii.models import Fii
 from decimal import Decimal
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import receiver
+from django.db.models import Sum
+
+from fii.models import Fii
 
 
 class Movimento(models.Model):
@@ -27,3 +31,17 @@ class Movimento(models.Model):
     def save(self, *args, **kwargs):
         self.valTotal = self.get_values
         super(Movimento, self).save(*args, **kwargs)
+
+
+@receiver(post_save, sender=Movimento)
+def atualiza_fii(sender, instance, **kwargs):
+    codFii_id = instance.codFii
+    fii = Fii.objects.filter(codFii=codFii_id).first() 
+    if fii:
+        if instance.tipMovimento == "C":
+            fii.valTotal = fii.valTotal + instance.valTotal
+            fii.qtdCotas = fii.qtdCotas + instance.qtdCotas
+        else:
+            fii.valTotal = fii.valTotal - instance.valTotal
+            fii.qtdCotas = fii.qtdCotas - instance.qtdCotas
+        fii.save()
