@@ -53,7 +53,7 @@
                                 <td>{{movimento.datMovimento}}</td>
                                 <td class="numero">{{movimento.valUnitario|floatformat:2}}</td>
                                 <td class="numero">{{movimento.qtdCotas}}</td>
-                                <td class="numero">{{movimento.valor_total|floatformat:2}}</td>
+                                <td class="numero">{{movimento.valTotal|floatformat:2}}</td>
                                 <td>{{movimento.tipMovimento}}</td>
                                 <td class="botao_lista"><a href="{% url 'altera_movimento' movimento.id %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
                                 <td class="botao_lista"><a href="#" onclick="confirmar_exclusao('{{movimento.id}}','/movimento/exclui_movimento/')"><i class='icone-exit bi bi bi-x-circle'></i></a></td>

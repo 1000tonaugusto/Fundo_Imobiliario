@@ -8,6 +8,7 @@ class Fii(models.Model):
     nomFii = models.CharField(max_length=50, verbose_name='Nome do fundo imobiliario', default='', null=False, blank=False)
     qtdCotas = models.IntegerField(verbose_name='Quantidade de cotas', null=True, default=0)
     valTotal = models.DecimalField(max_digits=15, decimal_places=4, verbose_name='Total investido', null=True, default=0)
+    valDividendo = models.DecimalField(max_digits=15, decimal_places=4, verbose_name='Total dividendos', default=0)
     datCom = models.CharField(max_length=2,verbose_name='Data Com', null=False, blank=False)
     datPag = models.CharField(max_length=2, verbose_name='Data de pagamento', null=False, blank=False)
     tipFii = models.ForeignKey(Tipofii, null=False, on_delete=models.DO_NOTHING)
@@ -17,6 +18,7 @@ class Fii(models.Model):
         return self.codFii
     
     class Meta:
+        ordering = ['codFii']
         db_table = 'fii'
         db_table_comment = 'Fundos imobiliarios'
         

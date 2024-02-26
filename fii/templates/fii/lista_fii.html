@@ -51,13 +51,13 @@
                     <tbody>
                         {% for fii in fiis %}
                             <tr>
-                                <td>{{fii.0}}</td>
-                                <td>{{fii.1}}</td>
-                                <td>{{fii.2}}</td>
-                                <td class="numero">{{fii.3|floatformat:2}}</td>
-                                <td class="numero">{{fii.4|floatformat:2}}</td>
-                                <td class="botao_lista"><a href="{% url 'altera_fii' fii.0 %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
-                                <td class="botao_lista"><a href="#" onclick="confirmar_exclusao('{{fii.0}}','/fii/exclui_fii/')" ><i class='icone-exit bi bi bi-x-circle'></i></a></td>
+                                <td>{{fii.codFii}}</td>
+                                <td>{{fii.nomFii}}</td>
+                                <td>{{fii.tipFii}}</td>
+                                <td class="numero">{{fii.valTotal|floatformat:2}}</td>
+                                <td class="numero">{{fii.valDividendo|floatformat:2}}</td>
+                                <td class="botao_lista"><a href="{% url 'altera_fii' fii.codFii %}"><i class='icone-edit bi bi-pencil-square'></i></a></td>
+                                <td class="botao_lista"><a href="#" onclick="confirmar_exclusao('{{fii.codFii}}','/fii/exclui_fii/')" ><i class='icone-exit bi bi bi-x-circle'></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
