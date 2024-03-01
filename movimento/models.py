@@ -20,7 +20,7 @@ class Movimento(models.Model):
         db_table_comment = 'Compra e venda de ativos'
 
     def __str__(self):
-        return self.id
+        return str(self.valTotal)
         
     @property
     def get_values(self):
@@ -54,6 +54,6 @@ def atualiza_fii_del(sender, instance, **kwargs):
             fii.valTotal = fii.valTotal - instance.valTotal
             fii.qtdCotas = fii.qtdCotas - int(instance.qtdCotas)
         else:
-            fii.valTotal = fii.valtotal + instance.valTotal
+            fii.valTotal = fii.valTotal + instance.valTotal
             fii.qtdCotas = fii.qtdCotas + int(instance.qtdCotas)
         fii.save()

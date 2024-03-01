@@ -1,10 +1,9 @@
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.messages import constants
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
-from decimal import Decimal
+from django.db.models.functions import TruncMonth
 
 from .models import Movimento
 from .forms import MovimentoForm
@@ -38,15 +37,31 @@ def lista_movimento(request):
 @login_required()
 def resumo_movimento(request):
     if request.method == "GET":
+        rotulos = []
+        series = ''
+        tipograf = ''
         fiis = Fii.objects.all().order_by('codFii')
-        movimentos = Movimento.objects.all().values('codFii').annotate(quanttotal=Sum('qtdCotas'),valortotal=Sum('valTotal')).order_by('codFii')
+        cod_fiis = [i.codFii for i in fiis]
+        for i in cod_fiis:
+            rotulos.append(i)
+            tipograf = tipograf + '{"type": "bar"},'
+            dados = []
+            dados.append(i)
+            x = 1
+            while (x <= 12):
+                mov = Movimento.objects.annotate(mes=TruncMonth('datMovimento')).values('mes').filter(datMovimento__month=x).filter(codFii=i).annotate(valortotal=Sum('valTotal'))
+                if mov:
+                    dados.append(float(mov[0]["valortotal"]))
+                else:
+                    dados.append(0)
+                x += 1
+            series = series + str(dados) + ','
+        series = series[:-1]
+        series = series.strip('"\'')
+        tipograf = tipograf[:-1]
+        print(tipograf)
         
-        filtra_fii = request.GET.get('codFii_filtra')
-        if filtra_fii:
-            movimentos = Movimento.objects.filter(codFii_id=filtra_fii)
-        
-        return render(request, 'movimento/resumo_movimento.html', {'fiis': fiis, 'movimentos': movimentos})
-        
+        return render(request, 'movimento/grafico_movimento.html', {'fiis': fiis, 'rotulos': rotulos, 'series': series, 'tipograf': tipograf})
 
 
 @login_required()

@@ -4,9 +4,13 @@
     <h1 class="viga-regular">Resumo de movimentações</h1>
 {% endblock %}
 {% block 'conteudo' %}
+
     <div class="container">
         <br>
         <div class="row">
+            <pre>
+                {{ movimentos_json.content }}
+                </pre>
             <div class="col-md">
                 <form action="{% url 'lista_movimento' %}" method="GET">
                     <div class="row">
@@ -41,6 +45,7 @@
                             </tr>
                         </thead>
                     <tbody>
+
                         {% for movimento in movimentos %}
                             <tr>
                                 <td>{{movimento.codFii}}</td>

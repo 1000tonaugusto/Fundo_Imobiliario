@@ -5,6 +5,7 @@ from django.contrib.messages import constants
 from decimal import Decimal
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
+from django.db.models.functions import TruncMonth
 
 from .models import Dividendo
 from fii.models import Fii
@@ -84,16 +85,44 @@ def exclui_dividendo(request, id):
 
 @login_required()
 def grafico_dividendo(request):
-    dividendos = Dividendo.objects.values_list('codFii').annotate(valor_total=Sum('valTotal'))
-    rotulos = []
-    valores = []
+    if request.method == "GET":
+        rotulos = []
+        series = ''
+        
+        fiis = Fii.objects.all().order_by('codFii')
+        cod_fiis = [i.codFii for i in fiis]
+        for i in cod_fiis:
+            rotulos.append(i)
+            
+            dados = []
+            dados.append(i)
+            x = 1
+            tipograf = ''
+            while (x <= 12):
+                tipograf = tipograf + '{"type": "bar"},'
+                mov = Dividendo.objects.annotate(mes=TruncMonth('datPaga')).values('mes').filter(datPaga__month=x).filter(codFii=i).annotate(valortotal=Sum('valTotal'))
+                if mov:
+                    dados.append(float(mov[0]["valortotal"]))
+                else:
+                    dados.append(0)
+                x += 1
+            series = series + str(dados) + ','
+        series = series[:-1]
+        series = series.strip('"\'')
+        tipograf = tipograf[:-1]
+
+        return render(request, 'dividendo/grafico_dividendo.html', {'rotulos': rotulos, 'series': series, 'tipograf': tipograf})
+    
+    #dividendos = Dividendo.objects.values_list('codFii').annotate(valor_total=Sum('valTotal'))
+    #rotulos = []
+    #valores = []
     #valores = [x[1] for x in dividendos]
     
-    for dividendo in dividendos:
-        rotulos.append(dividendo[0])
-        valores.append(float(dividendo[1]))
+    #for dividendo in dividendos:
+    #    rotulos.append(dividendo[0])
+    #    valores.append(float(dividendo[1]))
     
-    return render(request, 'dividendo/grafico_dividendo.html', {'valores': valores, 'rotulos': rotulos})
+    #return render(request, 'dividendo/grafico_dividendo.html', {'valores': valores, 'rotulos': rotulos})
 
 
 @login_required()

@@ -4,44 +4,36 @@
     <h1 class="viga-regular">Gráfico de dividendos</h1>
 {% endblock %}
 {% block 'conteudo' %} 
-<div class="container">
-	<br />
-	<br />
-	<div class="row">
-		<div class="col-md">
-			<br />
-			<div class="row">
-				<div class="col-md">
-					<canvas id="grafico1"></canvas>
-				</div>
-			</div>
-			<div class="table_fii"></div>
-		</div>
-	</div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div id="grafico1" style="width:100%; height: 700px"></div>
 
-<script>
-	const ctx = document.getElementById('grafico1');
-	new Chart(ctx, {
-	    type: 'bar',
-	    data: {
-	    labels: {{ rotulos|safe }},
-	    datasets: [{
-	    label: 'Dividendos',
-	    data: {{ valores|safe }},
-	    borderWidth: 2
-	    }]
-	  },
-	  options: {
-	    scales: {
-	    y: {
-	      beginAtZero: true
-	    }
-	    }
-	  }
-	});
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+
+<script type="text/javascript">
+	var myChart = echarts.init(document.getElementById('grafico1'));
+	
+	var option = {
+		"legend": {},
+		"tooltip": {},
+		"dataset": {
+			"source": [
+				['rotulos','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+				{{ series|safe}},
+			]
+		},
+		"xAxis": {
+			"type": "category"
+		},
+		"yAxis": {},
+		"series": [{{tipograf|safe}}]
+	}
+
+	myChart.resize();
+
+	myChart.setOption(option)
 </script>
 
 {% endblock 'conteudo' %}

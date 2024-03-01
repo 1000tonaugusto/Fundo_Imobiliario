@@ -182,3 +182,9 @@ ul {
 hr {
     color: linear-gradient(to right, transparent, rgb(162, 219, 236), transparent);
 }
+
+#grafico {
+    width: 100%;
+    height: 100%;
+    background-color: #000287;
+}

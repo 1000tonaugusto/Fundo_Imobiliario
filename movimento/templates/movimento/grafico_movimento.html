@@ -4,18 +4,13 @@
     <h1 class="viga-regular">Gráfico Movimentação</h1>
 {% endblock %}
 {% block 'conteudo' %} 
-<div class="container">
-	<div class="row">
-		<div class="col-md">
 
 
-					<div id="grafico1" style="width: 600px;height:600px;"></div>
+
+					<div id="grafico1" style="width:100%; height: 700px"></div>
 
 
-			<div class="table_fii"></div>
-		</div>
-	</div>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
 
@@ -23,35 +18,20 @@
 	var myChart = echarts.init(document.getElementById('grafico1'));
 	
 	var option = {
-		title: {
-			text: 'Movimentação'
+		"legend": {},
+		"tooltip": {},
+		"dataset": {
+			"source": [
+				['rotulos','Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+				{{ series|safe}},
+			]
 		},
-		grid: {
-			left: '5%',
-			right: '5%',
-			containLabel: true
+		"xAxis": {
+			"type": "category"
 		},
-		tooltip: {},
-		legend: {
-			data: {{ rotulos|safe }}
-		},
-		xAxis: {
-			type: "category",
-			data: {{ rotulos|safe }},
-			axisTick: {
-				alignWithLabel: true
-			}
-		},
-		yAxis: { type: 'value'},
-		series: [
-			{
-			name: 'Movimentação',
-			type: 'bar',
-			barWidth: '80%',
-			data: {{ valores|safe }},
-			}
-		]
-	};
+		"yAxis": {},
+		"series": [{{tipograf|safe}}]
+	}
 
 	myChart.resize();
 
