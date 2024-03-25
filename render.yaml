@@ -1,6 +1,6 @@
 services:
 	- type: web
-	  name: gestao_fii
+	  name: core
 	  buildCommand: "./build.sh"
 	  env: python
-	  startCommand: "gunicorn gestao_fii.wsgi:appication"
+	  startCommand: "gunicorn core.wsgi:application"
